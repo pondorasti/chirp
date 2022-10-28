@@ -1,0 +1,13 @@
+{
+  "name": "chirp",
+  "id": "1167909952592149014",
+  "api": "1.0.0",
+  "main": "dist/code.js",
+  "editorType": [
+    "figma",
+    "figjam"
+  ],
+  "containsWidget": true,
+  "widgetApi": "1.0.0",
+  "ui": "ui.html"
+}
