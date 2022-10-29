@@ -1,14 +1,14 @@
 {
   "name": "chirp",
-  "version": "1.0.0",
   "description": "Your Figma widget",
+  "version": "1.0.0",
+  "author": "Alexandru Ţurcanu",
+  "license": "MIT",
   "scripts": {
     "build": "esbuild widget-src/code.tsx --bundle --outfile=dist/code.js --target=es6",
     "tsc": "tsc --noEmit -p widget-src",
     "watch": "npm run build -- --watch"
   },
-  "author": "",
-  "license": "",
   "devDependencies": {
     "@figma/plugin-typings": "*",
     "@figma/widget-typings": "*",

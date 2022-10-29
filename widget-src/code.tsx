@@ -1,5 +1,3 @@
-// This widget will open an Iframe window with buttons to show a toast message and close the window.
-
 const { widget } = figma
 const { useEffect, usePropertyMenu, useSyncedState, AutoLayout, Input, Text } = widget
 
@@ -82,19 +80,7 @@ function Widget() {
         blur: 12,
       }}
     >
-      <Text
-        fontSize={24}
-        fontWeight={600}
-        // onClick={
-        //   // Use async callbacks or return a promise to keep the Iframe window
-        //   // opened. Resolving the promise, closing the Iframe window, or calling
-        //   // "figma.closePlugin()" will terminate the code.
-        //   () =>
-        //     new Promise((resolve) => {
-        //       figma.showUI(__html__)
-        //     })
-        // }
-      >
+      <Text fontSize={24} fontWeight={600}>
         Chirp
       </Text>
 
@@ -135,7 +121,20 @@ function Widget() {
         verticalAlignItems="center"
         width="fill-parent"
         fill="#1d9bf0"
-        onClick={() => {}}
+        onClick={
+          // Resolving the promise, closing the Iframe window, or calling
+          // "figma.closePlugin()" will terminate the code.
+          async () =>
+            new Promise((resolve) => {
+              console.log("boop")
+              figma.showUI(__html__, { visible: false })
+              figma.ui.postMessage({ type: "networkRequest" })
+              figma.ui.onmessage = (msg) => {
+                console.log({ msg })
+                resolve(null)
+              }
+            })
+        }
       >
         <Text fill="#fff" fontWeight={600} fontSize={18}>
           Embed
