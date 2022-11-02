@@ -1,11 +1,9 @@
 <script>
   window.onmessage = async (event) => {
-    if (event.data.pluginMessage.type === 'networkRequest') {
-      console.log({ event })
+    if (event.data.pluginMessage.type === 'fetch-tweet' && !!event.data.pluginMessage.id) {
       var request = new XMLHttpRequest()
-      // This link has random lorem ipsum text
-      request.open('GET', 'https://alexandru.so/')
-      request.responseType = 'text'
+      request.open('GET', `http://localhost:3000/api/tweet/${event.data.pluginMessage.id}`) // https://alexandru.so
+      request.responseType = 'json'
       request.onload = () => {
         window.parent.postMessage({ pluginMessage: request.response }, '*')
       };

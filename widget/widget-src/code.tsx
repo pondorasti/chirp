@@ -100,19 +100,15 @@ function Widget() {
         verticalAlignItems="center"
         width="fill-parent"
         fill="#1d9bf0"
-        onClick={
-          // Resolving the promise, closing the Iframe window, or calling
-          // "figma.closePlugin()" will terminate the code.
-          async () =>
-            new Promise((resolve) => {
-              console.log("boop")
-              figma.showUI(__html__, { visible: false })
-              figma.ui.postMessage({ type: "networkRequest" })
-              figma.ui.onmessage = (tweet) => {
-                console.log({ tweet })
-                resolve(null)
-              }
-            })
+        onClick={async () =>
+          new Promise((resolve) => {
+            figma.showUI(__html__, { visible: false })
+            figma.ui.postMessage({ type: "fetch-tweet", id: tweetIdInput })
+            figma.ui.onmessage = (tweet) => {
+              console.log({ tweet })
+              resolve(null)
+            }
+          })
         }
       >
         <Text fill="#fff" fontWeight={600} fontSize={18}>
