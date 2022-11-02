@@ -7,9 +7,19 @@ const schema = z.object({
   id: z.string().min(1),
 })
 
-type IResponse = {
-  text?: string
-}
+type IResponse =
+  | {
+      text: string
+      createdAt?: string
+      publicMetrics: {
+        retweetCount: number
+        likeCount: number
+        replyCount: number
+      }
+    }
+  | {
+      error: string
+    }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<IResponse>) {
   await NextCors(req, res, {
@@ -20,7 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   const body = schema.safeParse(req.query)
 
   if (!body.success) {
-    return res.status(400).json({ text: "Invalid request" })
+    return res.status(400).json({ error: "Invalid request" })
   }
 
   const response = await twitter.tweets.findTweetsById({
@@ -40,6 +50,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       "reply_settings",
       "text",
       "withheld",
+      "public_metrics",
     ],
     expansions: [
       "attachments.media_keys",
@@ -54,7 +65,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       "duration_ms",
       "height",
       "media_key",
-      "organic_metrics",
       "preview_image_url",
       "type",
       "url",
@@ -67,9 +77,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   const tweet = response.data?.[0]
 
   if (!tweet) {
-    return res.status(404).json({ text: "Tweet not found" })
+    return res.status(404).json({ error: "Tweet not found" })
   }
 
   const formattedText = tweet?.text.replace(/https:\/\/[\n\S]+/g, "").replace("&amp;", "&")
-  res.status(200).json({ text: formattedText })
+  res.status(200).json({
+    text: formattedText,
+    createdAt: tweet.created_at,
+    publicMetrics: {
+      retweetCount:
+        (tweet.public_metrics?.retweet_count ?? 0) + (tweet.public_metrics?.quote_count ?? 0),
+      likeCount: tweet.public_metrics?.like_count ?? 0,
+      replyCount: tweet.public_metrics?.reply_count ?? 0,
+    },
+    // tweet: response.data,
+  })
 }
