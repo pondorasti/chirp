@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next"
+import NextCors from "nextjs-cors"
 import { z } from "zod"
 import twitter from "../../../lib/twitter"
 
@@ -11,6 +12,11 @@ type IResponse = {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<IResponse>) {
+  await NextCors(req, res, {
+    methods: ["GET"],
+    origin: "*",
+  })
+
   const body = schema.safeParse(req.query)
 
   if (!body.success) {
