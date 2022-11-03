@@ -8,6 +8,9 @@
         window.parent.postMessage({ pluginMessage: request.response }, '*')
       };
       request.send()
+    } else if (event.data.pluginMessage.type === "open-url" && !!event.data.pluginMessage.url) {
+      window.open(event.data.pluginMessage.url, "_blank")
+      window.parent.postMessage({ pluginMessage: true }, '*')
     }
   }
 </script>

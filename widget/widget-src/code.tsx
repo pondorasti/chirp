@@ -1,4 +1,21 @@
-import { activeHeartIcon, externalLinkIcon, heartIcon, refreshIcon, slidersIcon } from "./Icons"
+import {
+  activeHeartIcon,
+  activeReplyIcon,
+  activeRetweetIcon,
+  externalLinkIcon,
+  heartIcon,
+  likeBackgroundAccent,
+  likeForegroundAccent,
+  refreshIcon,
+  replyBackgroundAccent,
+  replyForegroundAccent,
+  replyIcon,
+  retweetBackgroundAccent,
+  retweetForegroundAccent,
+  retweetIcon,
+  slidersIcon,
+  twitterBlue,
+} from "./Icons"
 import IntentGroup from "./IntentGroup"
 
 const { widget } = figma
@@ -17,6 +34,16 @@ interface Tweet {
     verified: boolean
     profileImageURI?: string
   }
+}
+
+function openURL(url: string): Promise<void> {
+  return new Promise((resolve) => {
+    figma.showUI(__html__, { visible: false })
+    figma.ui.postMessage({ type: "open-url", url })
+    figma.ui.onmessage = () => {
+      resolve(void 0)
+    }
+  })
 }
 
 function Widget() {
@@ -44,9 +71,10 @@ function Widget() {
         icon: slidersIcon,
       },
     ],
-    (e) => {
+    async (e) => {
       switch (e.propertyName) {
         case "open":
+          await openURL(`https://twitter.com/${tweet?.author.username}/status/${tweetIdInput}`)
           break
         case "refresh":
           break
@@ -129,39 +157,36 @@ function Widget() {
             horizontalAlignItems="start"
             verticalAlignItems="center"
           >
-            <AutoLayout
-              name="reply-container"
-              spacing={2}
-              direction="horizontal"
-              horizontalAlignItems="center"
-              verticalAlignItems="center"
-            >
-              <Image
-                width={24}
-                height={24}
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAECSURBVHgBpY87TwJBFIXPnVkhbqQQE7UQNWhrsdpLI40FsdSYGGNvbWFhZ2Jj+AWER0fFD6CAhhYCod8GGmCLJRAI2Rl22LDh1RBOc1/fzb0H2EK0WPSfzj+lxG3wMIpAOKpaZfpPpddgKxG510BllSsw6MGAEAYl0zWVMn+L8boEzOXD0oRwrI1vZF9ESRetWO94XMjEDwxb0xttTF6txyNbzbU5mHmWhhtiQ3aGSkQmTH129YJLunJjdQned9DshkbF8d7o4cRiOSB0475ld+JUnTM+/Pb1d0p8ck2eKXN49/OOFfkGOXfCLnjpdamNDfLhgfFdIyE+GOg3AJHHrpoC5YtKfAfixH0AAAAASUVORK5CYII="
-              />
-              <Text fontSize={12} fontWeight={400}>
-                {tweet.publicMetrics.replyCount}
-              </Text>
-            </AutoLayout>
+            <IntentGroup
+              name="reply-intent"
+              count={tweet.publicMetrics.replyCount}
+              foregroundFill={replyForegroundAccent}
+              backgroundFill={replyBackgroundAccent}
+              icon={replyIcon}
+              activeIcon={activeReplyIcon}
+              onClick={() =>
+                openURL(`https://twitter.com/intent/tweet?in_reply_to=${tweetIdInput}`)
+              }
+            />
 
             <IntentGroup
               name="retweet-intent"
               count={tweet.publicMetrics.retweetCount}
-              foregroundFill="#00ba7c"
-              backgroundFill="#def1eb"
-              icon={heartIcon}
-              activeIcon={activeHeartIcon}
+              foregroundFill={retweetForegroundAccent}
+              backgroundFill={retweetBackgroundAccent}
+              icon={retweetIcon}
+              activeIcon={activeRetweetIcon}
+              onClick={() => openURL(`https://twitter.com/intent/retweet?tweet_id=${tweetIdInput}`)}
             />
 
             <IntentGroup
               name="like-intent"
               count={tweet.publicMetrics.likeCount}
-              foregroundFill="#f91880"
-              backgroundFill="#f7e0eb"
+              foregroundFill={likeForegroundAccent}
+              backgroundFill={likeBackgroundAccent}
               icon={heartIcon}
               activeIcon={activeHeartIcon}
+              onClick={() => openURL(`https://twitter.com/intent/like?tweet_id=${tweetIdInput}`)}
             />
           </AutoLayout>
         </>
@@ -207,8 +232,8 @@ function Widget() {
             horizontalAlignItems="center"
             verticalAlignItems="center"
             width="fill-parent"
-            fill="#1d9bf0"
-            onClick={async () =>
+            fill={twitterBlue}
+            onClick={() =>
               new Promise((resolve) => {
                 figma.showUI(__html__, { visible: false })
                 figma.ui.postMessage({ type: "fetch-tweet", id: tweetIdInput })
@@ -232,7 +257,7 @@ function Widget() {
 widget.register(Widget)
 
 // TODO
-// - [ ] intents (retweet, like, comment)
+// - [x] intents (retweet, like, comment)
 // - [ ] annotated text
 // - [ ] image cards
 // - [ ] gif cards

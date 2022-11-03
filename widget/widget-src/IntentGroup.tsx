@@ -1,3 +1,5 @@
+import { textSecondary } from "./Icons"
+
 const { widget } = figma
 const { AutoLayout, Text, SVG, Rectangle } = widget
 
@@ -8,6 +10,7 @@ export default function IntentGroup({
   backgroundFill,
   icon,
   activeIcon,
+  onClick,
 }: {
   name: string
   count: number
@@ -15,6 +18,7 @@ export default function IntentGroup({
   backgroundFill: string
   icon: string
   activeIcon: string
+  onClick: () => Promise<void>
 }) {
   return (
     <AutoLayout
@@ -26,7 +30,7 @@ export default function IntentGroup({
       verticalAlignItems="center"
       opacity={1}
       hoverStyle={{ opacity: 1 }}
-      onClick={() => {}}
+      onClick={onClick}
     >
       <SVG src={icon} width={18} height={18} positioning="absolute" />
       <Rectangle
@@ -39,8 +43,13 @@ export default function IntentGroup({
         hoverStyle={{ opacity: 1 }}
       />
       <SVG src={activeIcon} width={18} height={18} opacity={0} hoverStyle={{ opacity: 1 }} />
-      <Text fontSize={12} fontWeight={400} fill="#536471" hoverStyle={{ fill: foregroundFill }}>
-        {count}
+      <Text
+        fontSize={12}
+        fontWeight={400}
+        fill={textSecondary}
+        hoverStyle={{ fill: foregroundFill }}
+      >
+        {count > 1000 ? `${(count / 1000).toFixed(1)}K` : count.toLocaleString()}
       </Text>
     </AutoLayout>
   )
