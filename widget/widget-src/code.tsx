@@ -1,4 +1,5 @@
-import { externalLinkIcon, refreshIcon, slidersIcon } from "./Icons"
+import { activeHeartIcon, externalLinkIcon, heartIcon, refreshIcon, slidersIcon } from "./Icons"
+import IntentGroup from "./IntentGroup"
 
 const { widget } = figma
 const { useEffect, usePropertyMenu, useSyncedState, AutoLayout, Input, Text, Image } = widget
@@ -9,6 +10,12 @@ interface Tweet {
     retweetCount: number
     likeCount: number
     replyCount: number
+  }
+  author: {
+    name: string
+    username: string
+    verified: boolean
+    profileImageURI?: string
   }
 }
 
@@ -69,6 +76,7 @@ function Widget() {
       padding={32}
       spacing={32}
       cornerRadius={16}
+      width={384}
       direction="vertical"
       horizontalAlignItems="start"
       verticalAlignItems="center"
@@ -82,9 +90,38 @@ function Widget() {
     >
       {tweet ? (
         <>
-          <Text fontSize={16} fontWeight={500}>
+          <AutoLayout
+            name="author-container"
+            spacing={8}
+            direction="horizontal"
+            horizontalAlignItems="start"
+            verticalAlignItems="center"
+            width="fill-parent"
+          >
+            {tweet.author.profileImageURI && (
+              <Image src={tweet.author.profileImageURI} width={48} height={48} cornerRadius={48} />
+            )}
+            <AutoLayout
+              name="author-container"
+              spacing={4}
+              direction="vertical"
+              horizontalAlignItems="start"
+              verticalAlignItems="center"
+              width="fill-parent"
+            >
+              <Text fontSize={16} fontWeight={500} width="fill-parent">
+                {tweet.author.name}
+              </Text>
+              <Text fontSize={16} fontWeight={500} width="fill-parent">
+                @{tweet.author.username}
+              </Text>
+            </AutoLayout>
+          </AutoLayout>
+
+          <Text fontSize={16} fontWeight={500} width="fill-parent">
             {tweet.text}
           </Text>
+
           <AutoLayout
             name="metrics-container"
             spacing={8}
@@ -99,49 +136,33 @@ function Widget() {
               horizontalAlignItems="center"
               verticalAlignItems="center"
             >
-              <Text fontSize={16} fontWeight={400}>
+              <Image
+                width={24}
+                height={24}
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAECSURBVHgBpY87TwJBFIXPnVkhbqQQE7UQNWhrsdpLI40FsdSYGGNvbWFhZ2Jj+AWER0fFD6CAhhYCod8GGmCLJRAI2Rl22LDh1RBOc1/fzb0H2EK0WPSfzj+lxG3wMIpAOKpaZfpPpddgKxG510BllSsw6MGAEAYl0zWVMn+L8boEzOXD0oRwrI1vZF9ESRetWO94XMjEDwxb0xttTF6txyNbzbU5mHmWhhtiQ3aGSkQmTH129YJLunJjdQned9DshkbF8d7o4cRiOSB0475ld+JUnTM+/Pb1d0p8ck2eKXN49/OOFfkGOXfCLnjpdamNDfLhgfFdIyE+GOg3AJHHrpoC5YtKfAfixH0AAAAASUVORK5CYII="
+              />
+              <Text fontSize={12} fontWeight={400}>
                 {tweet.publicMetrics.replyCount}
               </Text>
-              <Image
-                width={24}
-                height={24}
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAECSURBVHgBpY87TwJBFIXPnVkhbqQQE7UQNWhrsdpLI40FsdSYGGNvbWFhZ2Jj+AWER0fFD6CAhhYCod8GGmCLJRAI2Rl22LDh1RBOc1/fzb0H2EK0WPSfzj+lxG3wMIpAOKpaZfpPpddgKxG510BllSsw6MGAEAYl0zWVMn+L8boEzOXD0oRwrI1vZF9ESRetWO94XMjEDwxb0xttTF6txyNbzbU5mHmWhhtiQ3aGSkQmTH129YJLunJjdQned9DshkbF8d7o4cRiOSB0475ld+JUnTM+/Pb1d0p8ck2eKXN49/OOFfkGOXfCLnjpdamNDfLhgfFdIyE+GOg3AJHHrpoC5YtKfAfixH0AAAAASUVORK5CYII="
-              />
             </AutoLayout>
 
-            <AutoLayout
-              name="retweet-container"
-              spacing={2}
-              direction="horizontal"
-              horizontalAlignItems="center"
-              verticalAlignItems="center"
-            >
-              <Text fontSize={16} fontWeight={400}>
-                {tweet.publicMetrics.retweetCount}
-              </Text>
-              <Image
-                width={24}
-                height={24}
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAECSURBVHgBpY87TwJBFIXPnVkhbqQQE7UQNWhrsdpLI40FsdSYGGNvbWFhZ2Jj+AWER0fFD6CAhhYCod8GGmCLJRAI2Rl22LDh1RBOc1/fzb0H2EK0WPSfzj+lxG3wMIpAOKpaZfpPpddgKxG510BllSsw6MGAEAYl0zWVMn+L8boEzOXD0oRwrI1vZF9ESRetWO94XMjEDwxb0xttTF6txyNbzbU5mHmWhhtiQ3aGSkQmTH129YJLunJjdQned9DshkbF8d7o4cRiOSB0475ld+JUnTM+/Pb1d0p8ck2eKXN49/OOFfkGOXfCLnjpdamNDfLhgfFdIyE+GOg3AJHHrpoC5YtKfAfixH0AAAAASUVORK5CYII="
-              />
-            </AutoLayout>
+            <IntentGroup
+              name="retweet-intent"
+              count={tweet.publicMetrics.retweetCount}
+              foregroundFill="#00ba7c"
+              backgroundFill="#def1eb"
+              icon={heartIcon}
+              activeIcon={activeHeartIcon}
+            />
 
-            <AutoLayout
-              name="like-container"
-              spacing={2}
-              direction="horizontal"
-              horizontalAlignItems="center"
-              verticalAlignItems="center"
-            >
-              <Text fontSize={16} fontWeight={400}>
-                {tweet.publicMetrics.likeCount}
-              </Text>
-              <Image
-                width={24}
-                height={24}
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAECSURBVHgBpY87TwJBFIXPnVkhbqQQE7UQNWhrsdpLI40FsdSYGGNvbWFhZ2Jj+AWER0fFD6CAhhYCod8GGmCLJRAI2Rl22LDh1RBOc1/fzb0H2EK0WPSfzj+lxG3wMIpAOKpaZfpPpddgKxG510BllSsw6MGAEAYl0zWVMn+L8boEzOXD0oRwrI1vZF9ESRetWO94XMjEDwxb0xttTF6txyNbzbU5mHmWhhtiQ3aGSkQmTH129YJLunJjdQned9DshkbF8d7o4cRiOSB0475ld+JUnTM+/Pb1d0p8ck2eKXN49/OOFfkGOXfCLnjpdamNDfLhgfFdIyE+GOg3AJHHrpoC5YtKfAfixH0AAAAASUVORK5CYII="
-              />
-            </AutoLayout>
+            <IntentGroup
+              name="like-intent"
+              count={tweet.publicMetrics.likeCount}
+              foregroundFill="#f91880"
+              backgroundFill="#f7e0eb"
+              icon={heartIcon}
+              activeIcon={activeHeartIcon}
+            />
           </AutoLayout>
         </>
       ) : (
@@ -156,6 +177,7 @@ function Widget() {
             direction="vertical"
             horizontalAlignItems="start"
             verticalAlignItems="center"
+            width="fill-parent"
           >
             <Text fontSize={16} fontWeight={500}>
               Tweet ID
@@ -173,8 +195,8 @@ function Widget() {
                 cornerRadius: 12,
                 padding: 8,
               }}
-              width={320}
               inputBehavior="wrap"
+              width="fill-parent"
             />
           </AutoLayout>
           <AutoLayout
@@ -208,3 +230,10 @@ function Widget() {
 }
 
 widget.register(Widget)
+
+// TODO
+// - [ ] intents (retweet, like, comment)
+// - [ ] annotated text
+// - [ ] image cards
+// - [ ] gif cards
+// - [ ] video cards

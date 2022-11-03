@@ -1,7 +1,18 @@
 import type { NextApiRequest, NextApiResponse } from "next"
 import NextCors from "nextjs-cors"
 import { z } from "zod"
+import imageToBase64 from "image-to-base64"
 import twitter from "../../../lib/twitter"
+
+// const getBase64StringFromDataURL = (dataURL) => dataURL.replace("data:", "").replace(/^.+,/, "")
+
+const blobToData = (blob: Blob) => {
+  return new Promise((resolve) => {
+    const reader = new FileReader()
+    reader.onloadend = () => resolve(reader.result)
+    reader.readAsDataURL(blob)
+  })
+}
 
 const schema = z.object({
   id: z.string().min(1),
@@ -15,6 +26,12 @@ type IResponse =
         retweetCount: number
         likeCount: number
         replyCount: number
+      }
+      author: {
+        name: string
+        username: string
+        verified: boolean
+        profileImageURI?: string
       }
     }
   | {
@@ -71,16 +88,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       "variants",
       "width",
     ],
-    "user.fields": ["profile_image_url", "url", "username"],
+    "user.fields": ["id", "profile_image_url", "url", "username", "verified"],
   })
 
   const tweet = response.data?.[0]
+  const users = response.includes?.users
+  const author = users?.find((user) => user.id === tweet?.author_id)
 
-  if (!tweet) {
-    return res.status(404).json({ error: "Tweet not found" })
-  }
+  if (!tweet) return res.status(404).json({ error: "Tweet not found" })
+  if (!author) return res.status(404).json({ error: "Author not found" })
 
   const formattedText = tweet?.text.replace(/https:\/\/[\n\S]+/g, "").replace("&amp;", "&")
+  const profileImageURI = author.profile_image_url
+    ? `data:image/png;base64,${await imageToBase64(author.profile_image_url)}`
+    : undefined
+
   res.status(200).json({
     text: formattedText,
     createdAt: tweet.created_at,
@@ -90,6 +112,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       likeCount: tweet.public_metrics?.like_count ?? 0,
       replyCount: tweet.public_metrics?.reply_count ?? 0,
     },
-    // tweet: response.data,
+    author: {
+      name: author.name,
+      username: author.username,
+      verified: !!author.verified,
+      profileImageURI,
+    },
+    // tweet: response,
   })
 }
