@@ -137,10 +137,10 @@ function Widget() {
               verticalAlignItems="center"
               width="fill-parent"
             >
-              <Text fontSize={16} fontWeight={500} width="fill-parent">
+              <Text fontSize={16} fontWeight={600} width="fill-parent">
                 {tweet.author.name}
               </Text>
-              <Text fontSize={16} fontWeight={500} width="fill-parent">
+              <Text fontSize={16} fontWeight={400} width="fill-parent">
                 @{tweet.author.username}
               </Text>
             </AutoLayout>
