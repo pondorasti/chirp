@@ -48,7 +48,7 @@ export default function IntentGroup({
         fontWeight={400}
         fill={textSecondary}
         hoverStyle={{ fill: foregroundFill }}
-        fontFamily="Helvetica Neue"
+        fontFamily="Inter"
       >
         {count > 1000 ? `${(count / 1000).toFixed(1)}K` : count.toLocaleString()}
       </Text>

@@ -104,7 +104,7 @@ function Widget() {
       name="body"
       padding={32}
       spacing={tweet ? 20 : 32}
-      cornerRadius={16}
+      cornerRadius={32}
       width={384}
       direction="vertical"
       horizontalAlignItems="start"
@@ -138,14 +138,14 @@ function Widget() {
               verticalAlignItems="center"
               width="fill-parent"
             >
-              <Text fontSize={16} fontWeight={600} width="fill-parent" fontFamily="Helvetica Neue">
+              <Text fontSize={16} fontWeight={600} width="fill-parent" fontFamily="Inter">
                 {tweet.author.name}
               </Text>
               <Text
                 fontSize={16}
                 fontWeight={400}
                 width="fill-parent"
-                fontFamily="Helvetica Neue"
+                fontFamily="Inter"
                 fill={textSecondary}
               >
                 @{tweet.author.username}
@@ -153,7 +153,7 @@ function Widget() {
             </AutoLayout>
           </AutoLayout>
 
-          <Text fontSize={18} fontWeight={400} width="fill-parent" fontFamily="Helvetica Neue">
+          <Text fontSize={18} fontWeight={400} width="fill-parent" fontFamily="Inter">
             {tweet.text}
           </Text>
 
