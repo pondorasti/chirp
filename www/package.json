@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@next/font": "^13.0.2",
     "image-to-base64": "^2.2.0",
     "next": "13.0.0",
     "nextjs-cors": "^2.1.1",

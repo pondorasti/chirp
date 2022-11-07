@@ -5,7 +5,6 @@ import imageToBase64 from "image-to-base64"
 import twitter from "../../../lib/twitter"
 
 // const getBase64StringFromDataURL = (dataURL) => dataURL.replace("data:", "").replace(/^.+,/, "")
-
 const blobToData = (blob: Blob) => {
   return new Promise((resolve) => {
     const reader = new FileReader()
