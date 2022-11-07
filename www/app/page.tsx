@@ -1,4 +1,4 @@
-import FigmaIcon from "./FigmaIcon"
+import FigmaIcon from "./components/FigmaIcon"
 
 const tweetIds = [
   "1334334544598740994",

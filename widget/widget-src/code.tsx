@@ -267,5 +267,10 @@ widget.register(Widget)
 // - [x] intents (retweet, like, comment)
 // - [ ] annotated text
 // - [ ] image cards
-// - [ ] gif cards
-// - [ ] video cards
+// - [ ] gif/video cards
+// - [ ] icon
+
+// - [ ] custom font
+// - [ ] twitter card
+// - [ ] domain
+// - [x] analytics
