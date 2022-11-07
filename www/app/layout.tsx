@@ -5,6 +5,7 @@ const satoshi = localFont({
   src: "./Satoshi-Variable.woff2",
   variable: "--font-satoshi",
   weight: "300 700",
+  display: "swap",
 })
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
