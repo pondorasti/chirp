@@ -14,6 +14,7 @@ import {
   retweetForegroundAccent,
   retweetIcon,
   slidersIcon,
+  textSecondary,
   twitterBlue,
 } from "./Icons"
 import IntentGroup from "./IntentGroup"
@@ -102,7 +103,7 @@ function Widget() {
     <AutoLayout
       name="body"
       padding={32}
-      spacing={32}
+      spacing={tweet ? 20 : 32}
       cornerRadius={16}
       width={384}
       direction="vertical"
@@ -131,22 +132,28 @@ function Widget() {
             )}
             <AutoLayout
               name="author-container"
-              spacing={4}
+              spacing={2}
               direction="vertical"
               horizontalAlignItems="start"
               verticalAlignItems="center"
               width="fill-parent"
             >
-              <Text fontSize={16} fontWeight={600} width="fill-parent">
+              <Text fontSize={16} fontWeight={600} width="fill-parent" fontFamily="Helvetica Neue">
                 {tweet.author.name}
               </Text>
-              <Text fontSize={16} fontWeight={400} width="fill-parent">
+              <Text
+                fontSize={16}
+                fontWeight={400}
+                width="fill-parent"
+                fontFamily="Helvetica Neue"
+                fill={textSecondary}
+              >
                 @{tweet.author.username}
               </Text>
             </AutoLayout>
           </AutoLayout>
 
-          <Text fontSize={16} fontWeight={500} width="fill-parent">
+          <Text fontSize={18} fontWeight={400} width="fill-parent" fontFamily="Helvetica Neue">
             {tweet.text}
           </Text>
 
