@@ -20,9 +20,10 @@ import {
 import IntentGroup from "./IntentGroup"
 
 const { widget } = figma
-const { useEffect, usePropertyMenu, useSyncedState, AutoLayout, Input, Text, Image } = widget
+const { usePropertyMenu, useSyncedState, AutoLayout, Input, Text, Image } = widget
 
 interface Tweet {
+  id: string
   text: string
   publicMetrics: {
     retweetCount: number
@@ -48,7 +49,7 @@ function openURL(url: string): Promise<void> {
 }
 
 function Widget() {
-  const [tweetIdInput, setTweetIdInput] = useSyncedState("tweetIdInput", "")
+  const [tweetInput, setTweetInput] = useSyncedState("tweetInput", "")
   const [tweet, setTweet] = useSyncedState<Tweet | null>("tweet", null)
 
   usePropertyMenu(
@@ -75,7 +76,7 @@ function Widget() {
     async (e) => {
       switch (e.propertyName) {
         case "open":
-          await openURL(`https://twitter.com/${tweet?.author.username}/status/${tweetIdInput}`)
+          await openURL(`https://twitter.com/${tweet?.author.username}/status/${tweet?.id}`)
           break
         case "refresh":
           break
@@ -87,17 +88,6 @@ function Widget() {
       }
     }
   )
-
-  useEffect(() => {
-    figma.ui.onmessage = (msg) => {
-      if (msg.type === "showToast") {
-        figma.notify("Hello widget")
-      }
-      if (msg.type === "close") {
-        figma.closePlugin()
-      }
-    }
-  })
 
   return (
     <AutoLayout
@@ -171,9 +161,7 @@ function Widget() {
               backgroundFill={replyBackgroundAccent}
               icon={replyIcon}
               activeIcon={activeReplyIcon}
-              onClick={() =>
-                openURL(`https://twitter.com/intent/tweet?in_reply_to=${tweetIdInput}`)
-              }
+              onClick={() => openURL(`https://twitter.com/intent/tweet?in_reply_to=${tweet.id}`)}
             />
 
             <IntentGroup
@@ -183,7 +171,7 @@ function Widget() {
               backgroundFill={retweetBackgroundAccent}
               icon={retweetIcon}
               activeIcon={activeRetweetIcon}
-              onClick={() => openURL(`https://twitter.com/intent/retweet?tweet_id=${tweetIdInput}`)}
+              onClick={() => openURL(`https://twitter.com/intent/retweet?tweet_id=${tweet.id}`)}
             />
 
             <IntentGroup
@@ -193,7 +181,7 @@ function Widget() {
               backgroundFill={likeBackgroundAccent}
               icon={heartIcon}
               activeIcon={activeHeartIcon}
-              onClick={() => openURL(`https://twitter.com/intent/like?tweet_id=${tweetIdInput}`)}
+              onClick={() => openURL(`https://twitter.com/intent/like?tweet_id=${tweet.id}`)}
             />
           </AutoLayout>
         </>
@@ -212,13 +200,13 @@ function Widget() {
             width="fill-parent"
           >
             <Text fontSize={16} fontWeight={500}>
-              Tweet ID
+              Tweet URL/ID
             </Text>
             <Input
-              value={tweetIdInput}
+              value={tweetInput}
               placeholder="1585396100026208257"
               onTextEditEnd={(e) => {
-                setTweetIdInput(e.characters)
+                setTweetInput(e.characters)
               }}
               fontSize={16}
               fill="#525252"
@@ -243,7 +231,16 @@ function Widget() {
             onClick={() =>
               new Promise((resolve) => {
                 figma.showUI(__html__, { visible: false })
-                figma.ui.postMessage({ type: "fetch-tweet", id: tweetIdInput })
+                if (tweetInput.includes("https://twitter.com")) {
+                  const id = tweetInput.replace(/.*\/status\/(\d+)$/, "$1")
+                  figma.ui.postMessage({ type: "fetch-tweet", id })
+                } else if (tweetInput.match(/^\d+$/)) {
+                  figma.ui.postMessage({ type: "fetch-tweet", id: tweetInput })
+                } else {
+                  figma.notify("⚠️ Invalid tweet input")
+                  resolve(null)
+                }
+
                 figma.ui.onmessage = (tweet) => {
                   setTweet(tweet)
                   resolve(null)
