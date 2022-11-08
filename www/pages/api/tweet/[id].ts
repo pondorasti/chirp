@@ -17,22 +17,25 @@ const schema = z.object({
   id: z.string().min(1),
 })
 
+export type ITweet = {
+  id: string
+  text: string
+  createdAt?: string
+  publicMetrics: {
+    retweetCount: number
+    likeCount: number
+    replyCount: number
+  }
+  author: {
+    name: string
+    username: string
+    verified: boolean
+    profileImageURI?: string
+  }
+}
+
 type IResponse =
-  | {
-      text: string
-      createdAt?: string
-      publicMetrics: {
-        retweetCount: number
-        likeCount: number
-        replyCount: number
-      }
-      author: {
-        name: string
-        username: string
-        verified: boolean
-        profileImageURI?: string
-      }
-    }
+  | ITweet
   | {
       error: string
     }
@@ -103,6 +106,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     : undefined
 
   res.status(200).json({
+    id: tweet.id,
     text: formattedText,
     createdAt: tweet.created_at,
     publicMetrics: {
