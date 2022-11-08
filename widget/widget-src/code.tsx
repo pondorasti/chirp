@@ -233,9 +233,9 @@ function Widget() {
             onClick={() =>
               new Promise((resolve) => {
                 figma.showUI(__html__, { visible: false })
-                if (tweetInput.includes("https://twitter.com")) {
-                  const id = tweetInput.replace(/.*\/status\/(\d+)$/, "$1")
-                  figma.ui.postMessage({ type: "fetch-tweet", id })
+                const potentialId = tweetInput.split("/").pop()?.split("?").shift()
+                if (tweetInput.includes("https://twitter.com") && potentialId) {
+                  figma.ui.postMessage({ type: "fetch-tweet", id: potentialId })
                 } else if (tweetInput.match(/^\d+$/)) {
                   figma.ui.postMessage({ type: "fetch-tweet", id: tweetInput })
                 } else {
