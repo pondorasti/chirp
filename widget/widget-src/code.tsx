@@ -261,18 +261,3 @@ function Widget() {
 }
 
 widget.register(Widget)
-
-// TODO
-// - [x] intents (retweet, like, comment)
-// - [x] tweet url unfurl
-// - [x] layout pixel peeping
-// - [ ] annotated text
-// - [ ] image cards
-// - [ ] gif/video cards
-// - [ ] icon
-
-// - [x] custom font
-// - [ ] twitter card
-// - [ ] domain
-// - [ ] footer
-// - [x] analytics
