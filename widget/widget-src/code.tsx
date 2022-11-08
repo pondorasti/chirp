@@ -153,8 +153,10 @@ function Widget() {
             direction="horizontal"
             horizontalAlignItems="start"
             verticalAlignItems="center"
+            overflow="visible"
           >
             <IntentGroup
+              isFirst
               name="reply-intent"
               count={tweet.publicMetrics.replyCount}
               foregroundFill={replyForegroundAccent}
@@ -262,12 +264,15 @@ widget.register(Widget)
 
 // TODO
 // - [x] intents (retweet, like, comment)
+// - [x] tweet url unfurl
+// - [x] layout pixel peeping
 // - [ ] annotated text
 // - [ ] image cards
 // - [ ] gif/video cards
 // - [ ] icon
 
-// - [ ] custom font
+// - [x] custom font
 // - [ ] twitter card
 // - [ ] domain
+// - [ ] footer
 // - [x] analytics

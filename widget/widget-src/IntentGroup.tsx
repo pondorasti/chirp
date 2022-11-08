@@ -3,6 +3,10 @@ import { textSecondary } from "./Icons"
 const { widget } = figma
 const { AutoLayout, Text, SVG, Rectangle } = widget
 
+const iconSize = 20
+const underlaySize = 32
+const underlayOffset = (underlaySize - iconSize) / 2
+
 export default function IntentGroup({
   name,
   count,
@@ -11,6 +15,7 @@ export default function IntentGroup({
   icon,
   activeIcon,
   onClick,
+  isFirst = false,
 }: {
   name: string
   count: number
@@ -19,32 +24,47 @@ export default function IntentGroup({
   icon: string
   activeIcon: string
   onClick: () => Promise<void>
+  isFirst?: boolean
 }) {
   return (
     <AutoLayout
       name={name}
       spacing={8}
-      padding={4}
+      padding={{
+        top: 0,
+        right: underlayOffset,
+        bottom: underlayOffset,
+        left: isFirst ? 0 : underlayOffset,
+      }}
       direction="horizontal"
       horizontalAlignItems="center"
       verticalAlignItems="center"
       opacity={1}
       hoverStyle={{ opacity: 1 }}
       onClick={onClick}
+      overflow="visible"
     >
-      <SVG src={icon} width={18} height={18} positioning="absolute" />
+      <SVG src={icon} width={iconSize} height={iconSize} positioning="absolute" />
       <Rectangle
-        width={26}
-        height={26}
-        cornerRadius={24}
+        width={underlaySize}
+        height={underlaySize}
+        cornerRadius={underlaySize}
         positioning="absolute"
+        x={isFirst ? -underlayOffset : 0}
+        y={-underlayOffset}
         fill={backgroundFill}
         opacity={0}
         hoverStyle={{ opacity: 1 }}
       />
-      <SVG src={activeIcon} width={18} height={18} opacity={0} hoverStyle={{ opacity: 1 }} />
+      <SVG
+        src={activeIcon}
+        width={iconSize}
+        height={iconSize}
+        opacity={0}
+        hoverStyle={{ opacity: 1 }}
+      />
       <Text
-        fontSize={12}
+        fontSize={13}
         fontWeight={400}
         fill={textSecondary}
         hoverStyle={{ fill: foregroundFill }}
