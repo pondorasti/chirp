@@ -1,4 +1,4 @@
-import { Tweet } from "./code"
+import { openURL, Tweet } from "./code"
 
 const { widget } = figma
 const { AutoLayout, Image } = widget
@@ -23,7 +23,15 @@ export default function MediaGroup({ media }: { media: Tweet["media"] }) {
       const width = Math.min(maxWidth, item.width)
       const height = width / aspectRatio
 
-      return <Image src={item.uri} width={width} height={height} cornerRadius={cornerRadius} />
+      return (
+        <Image
+          src={item.uri}
+          width={width}
+          height={height}
+          cornerRadius={cornerRadius}
+          onClick={() => openURL(item.url)}
+        />
+      )
     }
 
     case 2: {
@@ -46,6 +54,7 @@ export default function MediaGroup({ media }: { media: Tweet["media"] }) {
         >
           {media.map((item, index) => (
             <Image
+              key={item.id}
               src={item.uri}
               width={minWidth}
               height={maxHeight}
@@ -55,6 +64,7 @@ export default function MediaGroup({ media }: { media: Tweet["media"] }) {
                 bottomLeft: index === 0 ? cornerRadius : 0,
                 bottomRight: index === 1 ? cornerRadius : 0,
               }}
+              onClick={() => openURL(item.url)}
             />
           ))}
         </AutoLayout>
@@ -70,8 +80,9 @@ export default function MediaGroup({ media }: { media: Tweet["media"] }) {
           verticalAlignItems="center"
           horizontalAlignItems="center"
         >
-          {media.slice(0, 1).map((item, index) => (
+          {media.slice(0, 1).map((item) => (
             <Image
+              key={item.id}
               src={item.uri}
               width={minWidth}
               height={(minWidth / compactRatio) * 2 + adjacentPadding}
@@ -81,6 +92,7 @@ export default function MediaGroup({ media }: { media: Tweet["media"] }) {
                 bottomLeft: cornerRadius,
                 bottomRight: 0,
               }}
+              onClick={() => openURL(item.url)}
             />
           ))}
           <AutoLayout
@@ -92,6 +104,7 @@ export default function MediaGroup({ media }: { media: Tweet["media"] }) {
           >
             {media.slice(1, 3).map((item, index) => (
               <Image
+                key={item.id}
                 src={item.uri}
                 width={minWidth}
                 height={minWidth / compactRatio}
@@ -101,6 +114,7 @@ export default function MediaGroup({ media }: { media: Tweet["media"] }) {
                   bottomLeft: 0,
                   bottomRight: index === 1 ? cornerRadius : 0,
                 }}
+                onClick={() => openURL(item.url)}
               />
             ))}
           </AutoLayout>
@@ -126,6 +140,7 @@ export default function MediaGroup({ media }: { media: Tweet["media"] }) {
           >
             {media.slice(0, 2).map((item, index) => (
               <Image
+                key={item.id}
                 src={item.uri}
                 width={minWidth}
                 height={minWidth / compactRatio}
@@ -135,6 +150,7 @@ export default function MediaGroup({ media }: { media: Tweet["media"] }) {
                   bottomLeft: 0,
                   bottomRight: 0,
                 }}
+                onClick={() => openURL(item.url)}
               />
             ))}
           </AutoLayout>
@@ -147,6 +163,7 @@ export default function MediaGroup({ media }: { media: Tweet["media"] }) {
           >
             {media.slice(2, 4).map((item, index) => (
               <Image
+                key={item.id}
                 src={item.uri}
                 width={minWidth}
                 height={minWidth / compactRatio}
@@ -156,6 +173,7 @@ export default function MediaGroup({ media }: { media: Tweet["media"] }) {
                   bottomLeft: index === 0 ? cornerRadius : 0,
                   bottomRight: index === 1 ? cornerRadius : 0,
                 }}
+                onClick={() => openURL(item.url)}
               />
             ))}
           </AutoLayout>

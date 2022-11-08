@@ -38,15 +38,17 @@ export interface Tweet {
     profileImageURI?: string
   }
   media: {
+    id: string
     height: number
     width: number
     altText?: string
     type: "photo" | "video"
     uri: string
+    url: string
   }[]
 }
 
-function openURL(url: string): Promise<void> {
+export function openURL(url: string): Promise<void> {
   return new Promise((resolve) => {
     figma.showUI(__html__, { visible: false })
     figma.ui.postMessage({ type: "open-url", url })

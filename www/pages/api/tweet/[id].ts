@@ -24,11 +24,13 @@ export type ITweet = {
     profileImageURI?: string
   }
   media: {
+    id: string
     height: number
     width: number
     altText?: string
     type: "photo" | "video"
     uri: string
+    url: string
   }[]
 }
 
@@ -115,11 +117,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
     const uri = `data:image/${fileExtension};base64,${await imageToBase64(url)}`
     media.push({
+      id: mediaKey,
       height: mediaItem.height,
       width: mediaItem.width,
       altText: (mediaItem as any).alt_text,
       type: mediaItem.type,
       uri,
+      url,
     })
   }
 
