@@ -4,15 +4,6 @@ import { z } from "zod"
 import imageToBase64 from "image-to-base64"
 import twitter from "../../../lib/twitter"
 
-// const getBase64StringFromDataURL = (dataURL) => dataURL.replace("data:", "").replace(/^.+,/, "")
-const blobToData = (blob: Blob) => {
-  return new Promise((resolve) => {
-    const reader = new FileReader()
-    reader.onloadend = () => resolve(reader.result)
-    reader.readAsDataURL(blob)
-  })
-}
-
 const schema = z.object({
   id: z.string().min(1),
 })
@@ -32,6 +23,13 @@ export type ITweet = {
     verified: boolean
     profileImageURI?: string
   }
+  media: {
+    height: number
+    width: number
+    altText?: string
+    type: "photo" | "video"
+    uri: string
+  }[]
 }
 
 type IResponse =
@@ -57,16 +55,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     "tweet.fields": [
       "attachments",
       "author_id",
-      "context_annotations",
-      "conversation_id",
       "created_at",
       "entities",
       "geo",
       "id",
-      "in_reply_to_user_id",
-      "possibly_sensitive",
       "referenced_tweets",
-      "reply_settings",
       "text",
       "withheld",
       "public_metrics",
@@ -100,10 +93,35 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   if (!tweet) return res.status(404).json({ error: "Tweet not found" })
   if (!author) return res.status(404).json({ error: "Author not found" })
 
+  // Tweet Content Parsing
   const formattedText = tweet?.text.replace(/https:\/\/[\n\S]+/g, "").replace("&amp;", "&")
+
+  // Profile Image Conversation
   const profileImageURI = author.profile_image_url
     ? `data:image/png;base64,${await imageToBase64(author.profile_image_url)}`
     : undefined
+
+  // Media Conversation
+  const media: ITweet["media"] = []
+  for await (const mediaKey of tweet.attachments?.media_keys || []) {
+    const mediaItem = response.includes?.media?.find((media) => media.media_key === mediaKey)
+    if (!mediaItem) return
+    if (!mediaItem.width || !mediaItem.height) return
+    if (mediaItem.type !== "photo") return
+
+    const url = (mediaItem as any).url as string
+    const fileExtension = url.split(".").pop()
+    if (!fileExtension) return
+
+    const uri = `data:image/${fileExtension};base64,${await imageToBase64(url)}`
+    media.push({
+      height: mediaItem.height,
+      width: mediaItem.width,
+      altText: (mediaItem as any).alt_text,
+      type: mediaItem.type,
+      uri,
+    })
+  }
 
   res.status(200).json({
     id: tweet.id,
@@ -121,6 +139,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       verified: !!author.verified,
       profileImageURI,
     },
+    media,
     // tweet: response,
   })
 }

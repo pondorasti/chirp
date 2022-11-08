@@ -18,11 +18,12 @@ import {
   twitterBlue,
 } from "./Icons"
 import IntentGroup from "./IntentGroup"
+import MediaGroup from "./MediaGroup"
 
 const { widget } = figma
 const { usePropertyMenu, useSyncedState, AutoLayout, Input, Text, Image } = widget
 
-interface Tweet {
+export interface Tweet {
   id: string
   text: string
   publicMetrics: {
@@ -36,6 +37,13 @@ interface Tweet {
     verified: boolean
     profileImageURI?: string
   }
+  media: {
+    height: number
+    width: number
+    altText?: string
+    type: "photo" | "video"
+    uri: string
+  }[]
 }
 
 function openURL(url: string): Promise<void> {
@@ -53,26 +61,28 @@ function Widget() {
   const [tweet, setTweet] = useSyncedState<Tweet | null>("tweet", null)
 
   usePropertyMenu(
-    [
-      {
-        tooltip: "Open Tweet",
-        propertyName: "open",
-        itemType: "action",
-        icon: externalLinkIcon,
-      },
-      {
-        tooltip: "Refresh Tweet",
-        propertyName: "refresh",
-        itemType: "action",
-        icon: refreshIcon,
-      },
-      {
-        tooltip: "Edit Tweet",
-        propertyName: "edit",
-        itemType: "action",
-        icon: slidersIcon,
-      },
-    ],
+    tweet
+      ? [
+          {
+            tooltip: "Open Tweet",
+            propertyName: "open",
+            itemType: "action",
+            icon: externalLinkIcon,
+          },
+          {
+            tooltip: "Refresh Tweet",
+            propertyName: "refresh",
+            itemType: "action",
+            icon: refreshIcon,
+          },
+          {
+            tooltip: "Edit Tweet",
+            propertyName: "edit",
+            itemType: "action",
+            icon: slidersIcon,
+          },
+        ]
+      : [],
     async (e) => {
       switch (e.propertyName) {
         case "open":
@@ -111,7 +121,7 @@ function Widget() {
         <>
           <AutoLayout
             name="author-container"
-            spacing={8}
+            spacing={12}
             direction="horizontal"
             horizontalAlignItems="start"
             verticalAlignItems="center"
@@ -146,6 +156,8 @@ function Widget() {
           <Text fontSize={18} fontWeight={400} width="fill-parent" fontFamily="Inter">
             {tweet.text}
           </Text>
+
+          <MediaGroup media={tweet.media} />
 
           <AutoLayout
             name="metrics-container"
@@ -233,7 +245,12 @@ function Widget() {
             onClick={() =>
               new Promise((resolve) => {
                 figma.showUI(__html__, { visible: false })
+
+                // get id after the last slash and trim everything after question mark
+                // ex: https://twitter.com/lavieestbelIe/status/1589649527195115520?s=20&t=IMsQCAsl6pkN0QO9EcTKLA → 1589649527195115520
+                // ex: https://twitter.com/lavieestbelIe/status/1589649527195115520 → 1589649527195115520
                 const potentialId = tweetInput.split("/").pop()?.split("?").shift()
+
                 if (tweetInput.includes("https://twitter.com") && potentialId) {
                   figma.ui.postMessage({ type: "fetch-tweet", id: potentialId })
                 } else if (tweetInput.match(/^\d+$/)) {
