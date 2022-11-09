@@ -130,7 +130,13 @@ function Widget() {
             width="fill-parent"
           >
             {tweet.author.profileImageURI && (
-              <Image src={tweet.author.profileImageURI} width={48} height={48} cornerRadius={48} />
+              <Image
+                src={tweet.author.profileImageURI}
+                width={48}
+                height={48}
+                cornerRadius={48}
+                onClick={() => openURL(`https://twitter.com/${tweet.author.username}`)}
+              />
             )}
             <AutoLayout
               name="author-container"
@@ -140,7 +146,28 @@ function Widget() {
               verticalAlignItems="center"
               width="fill-parent"
             >
-              <Text fontSize={16} fontWeight={600} width="fill-parent" fontFamily="Inter">
+              <Text
+                fontSize={16}
+                fontWeight={600}
+                width="fill-parent"
+                fontFamily="Inter"
+                opacity={1}
+                hoverStyle={{ opacity: 0 }}
+                onClick={() => openURL(`https://twitter.com/${tweet.author.username}`)}
+              >
+                {tweet.author.name}
+              </Text>
+              <Text
+                positioning="absolute"
+                fontSize={16}
+                fontWeight={600}
+                width="fill-parent"
+                fontFamily="Inter"
+                opacity={0}
+                hoverStyle={{ opacity: 1 }}
+                textDecoration="underline"
+                onClick={() => openURL(`https://twitter.com/${tweet.author.username}`)}
+              >
                 {tweet.author.name}
               </Text>
               <Text
@@ -149,6 +176,7 @@ function Widget() {
                 width="fill-parent"
                 fontFamily="Inter"
                 fill={textSecondary}
+                onClick={() => openURL(`https://twitter.com/${tweet.author.username}`)}
               >
                 @{tweet.author.username}
               </Text>
