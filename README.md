@@ -5,8 +5,9 @@
 - [x] tweet url unfurl
 - [x] layout pixel peeping
 - [ ] annotated text
-- [ ] image cards
+- [x] image cards
 - [ ] gif/video cards
+- [ ] alt text
 - [ ] icon -> https://icon.ray.so/
 
 - [x] custom font
