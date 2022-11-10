@@ -107,15 +107,50 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   const media: ITweet["media"] = []
   for await (const mediaKey of tweet.attachments?.media_keys || []) {
     const mediaItem = response.includes?.media?.find((media) => media.media_key === mediaKey)
-    if (!mediaItem) return
-    if (!mediaItem.width || !mediaItem.height) return
-    if (mediaItem.type !== "photo") return
+    if (!mediaItem) continue
+    if (!mediaItem.width || !mediaItem.height) continue
 
-    const url = (mediaItem as any).url as string
-    const fileExtension = url.split(".").pop()
-    if (!fileExtension) return
+    let uri: string
+    let sourceUrl: string
 
-    const uri = `data:image/${fileExtension};base64,${await imageToBase64(url)}`
+    switch (mediaItem.type) {
+      case "photo": {
+        const url = (mediaItem as any).url as string
+        const fileExtension = url.split(".").pop()
+        if (!fileExtension) continue
+
+        uri = `data:image/${fileExtension};base64,${await imageToBase64(url)}`
+        sourceUrl = url
+
+        break
+      }
+      case "video": {
+        const url = (mediaItem as any).preview_image_url as string
+        const fileExtension = url.split(".").pop()
+        if (!fileExtension) continue
+
+        const variants = (mediaItem as any).variants as {
+          bit_rate?: number
+          content_type: string
+          url: string
+        }[]
+        const variant = variants.reduce((prev, curr) => {
+          if (!prev.bit_rate) return curr
+          if (!curr.bit_rate) return prev
+          return prev.bit_rate > curr.bit_rate ? prev : curr
+        })
+
+        uri = `data:image/${fileExtension};base64,${await imageToBase64(url)}`
+        console.log({ variant, variants })
+        sourceUrl = variant.url || url
+
+        break
+      }
+      default: {
+        continue
+      }
+    }
+
     media.push({
       id: mediaKey,
       height: mediaItem.height,
@@ -123,7 +158,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       altText: (mediaItem as any).alt_text,
       type: mediaItem.type,
       uri,
-      url,
+      url: sourceUrl,
     })
   }
 
