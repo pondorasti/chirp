@@ -1,4 +1,4 @@
-import { twitterBlue } from "./Icons"
+import { twitterBlue } from "./icons"
 import { fetchTweet, Tweet } from "./lib"
 
 const { widget } = figma

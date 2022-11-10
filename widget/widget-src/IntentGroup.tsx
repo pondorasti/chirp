@@ -1,4 +1,4 @@
-import { textSecondary } from "./Icons"
+import { textSecondary } from "./icons"
 
 const { widget } = figma
 const { AutoLayout, Text, SVG, Rectangle } = widget

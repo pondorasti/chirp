@@ -15,7 +15,7 @@ import {
   retweetIcon,
   slidersIcon,
   textSecondary,
-} from "./Icons"
+} from "./icons"
 import IntentGroup from "./IntentGroup"
 import MediaGroup from "./MediaGroup"
 import Form from "./Form"
