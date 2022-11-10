@@ -19,47 +19,12 @@ import {
 import IntentGroup from "./IntentGroup"
 import MediaGroup from "./MediaGroup"
 import Form from "./Form"
+import { fetchTweet, openURL, Tweet } from "./lib"
 
 const { widget } = figma
 const { usePropertyMenu, useSyncedState, AutoLayout, Text, Image } = widget
 
-export interface Tweet {
-  id: string
-  text: string
-  publicMetrics: {
-    retweetCount: number
-    likeCount: number
-    replyCount: number
-  }
-  author: {
-    name: string
-    username: string
-    verified: boolean
-    profileImageURI?: string
-  }
-  media: {
-    id: string
-    height: number
-    width: number
-    altText?: string
-    type: "photo" | "video"
-    uri: string
-    url: string
-  }[]
-}
-
-export function openURL(url: string): Promise<void> {
-  return new Promise((resolve) => {
-    figma.showUI(__html__, { visible: false })
-    figma.ui.postMessage({ type: "open-url", url })
-    figma.ui.onmessage = () => {
-      resolve(void 0)
-    }
-  })
-}
-
 function Widget() {
-  const [tweetInput, setTweetInput] = useSyncedState("tweetInput", "")
   const [tweet, setTweet] = useSyncedState<Tweet | null>("tweet", null)
 
   usePropertyMenu(
@@ -91,6 +56,11 @@ function Widget() {
           await openURL(`https://twitter.com/${tweet?.author.username}/status/${tweet?.id}`)
           break
         case "refresh":
+          if (!tweet) break
+
+          const newTweet = await fetchTweet(tweet.id)
+          setTweet(newTweet)
+          figma.notify("✓ Tweet refreshed")
           break
         case "edit":
           setTweet(null)

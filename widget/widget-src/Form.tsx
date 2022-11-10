@@ -1,5 +1,5 @@
-import { Tweet } from "./code"
 import { twitterBlue } from "./Icons"
+import { fetchTweet, Tweet } from "./lib"
 
 const { widget } = figma
 const { useSyncedState, AutoLayout, Input, Text } = widget
@@ -51,30 +51,22 @@ export default function Form() {
         verticalAlignItems="center"
         width="fill-parent"
         fill={twitterBlue}
-        onClick={() =>
-          new Promise((resolve) => {
-            figma.showUI(__html__, { visible: false })
+        onClick={async () => {
+          // get id after the last slash and trim everything after question mark
+          // ex: https://twitter.com/lavieestbelIe/status/1589649527195115520 → 1589649527195115520
+          // ex: https://twitter.com/lavieestbelIe/status/1589649527195115520?s=20&t=IMsQCAsl6pkN0QO9EcTKLA → 1589649527195115520
+          const potentialId = tweetInput.split("/").pop()?.split("?").shift()
 
-            // get id after the last slash and trim everything after question mark
-            // ex: https://twitter.com/lavieestbelIe/status/1589649527195115520?s=20&t=IMsQCAsl6pkN0QO9EcTKLA → 1589649527195115520
-            // ex: https://twitter.com/lavieestbelIe/status/1589649527195115520 → 1589649527195115520
-            const potentialId = tweetInput.split("/").pop()?.split("?").shift()
-
-            if (tweetInput.includes("https://twitter.com") && potentialId) {
-              figma.ui.postMessage({ type: "fetch-tweet", id: potentialId })
-            } else if (tweetInput.match(/^\d+$/)) {
-              figma.ui.postMessage({ type: "fetch-tweet", id: tweetInput })
-            } else {
-              figma.notify("⚠️ Invalid tweet input")
-              resolve(null)
-            }
-
-            figma.ui.onmessage = (tweet) => {
-              setTweet(tweet)
-              resolve(null)
-            }
-          })
-        }
+          if (tweetInput.includes("https://twitter.com") && potentialId) {
+            const newTweet = await fetchTweet(potentialId)
+            setTweet(newTweet)
+          } else if (tweetInput.match(/^\d+$/)) {
+            const newTweet = await fetchTweet(tweetInput)
+            setTweet(newTweet)
+          } else {
+            figma.notify("✗ Invalid tweet input")
+          }
+        }}
       >
         <Text fill="#fff" fontWeight={600} fontSize={18}>
           Embed
