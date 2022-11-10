@@ -1,10 +1,13 @@
-import { openURL, Tweet } from "./code"
+import { playIcon, twitterBlue } from "./Icons"
+import { openURL, Tweet } from "./lib"
 
 const { widget } = figma
-const { AutoLayout, Image } = widget
+const { AutoLayout, Image, Frame, Rectangle, SVG } = widget
 
 const cornerRadius = 12
 const adjacentPadding = 2
+const playButtonContainer = 64
+const playButtonSize = 42
 
 const maxWidth = 320
 const minWidth = (maxWidth + adjacentPadding) / 2
@@ -24,13 +27,35 @@ export default function MediaGroup({ media }: { media: Tweet["media"] }) {
       const height = width / aspectRatio
 
       return (
-        <Image
-          src={item.uri}
+        <Frame
           width={width}
           height={height}
           cornerRadius={cornerRadius}
           onClick={() => openURL(item.url)}
-        />
+        >
+          <Image src={item.uri} width={width} height={height} />
+          {item.type === "video" && (
+            <>
+              <Rectangle
+                width={playButtonContainer}
+                height={playButtonContainer}
+                x={(width - playButtonContainer) / 2}
+                y={(height - playButtonContainer) / 2}
+                cornerRadius={playButtonContainer}
+                fill={twitterBlue}
+                strokeWidth={3}
+                stroke="#fff"
+              />
+              <SVG
+                src={playIcon}
+                width={playButtonSize}
+                height={playButtonSize}
+                x={(width - playButtonSize) / 2 + 2}
+                y={(height - playButtonSize) / 2}
+              />
+            </>
+          )}
+        </Frame>
       )
     }
 

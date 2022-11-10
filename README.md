@@ -4,11 +4,12 @@
 - [x] intents (retweet, like, comment)
 - [x] tweet url unfurl
 - [x] layout pixel peeping
-- [ ] annotated text
 - [x] image cards
-- [ ] gif/video cards
+- [ ] annotated text
+- [ ] twitter logo
+- [x] gif/video cards
+- [x] icon -> https://icon.ray.so/
 - [ ] alt text
-- [ ] icon -> https://icon.ray.so/
 
 - [x] custom font
 - [x] domain
