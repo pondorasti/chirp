@@ -151,6 +151,7 @@ function Widget() {
                 @{tweet.author.username}
               </Text>
             </AutoLayout>
+            <SVG src={twitterIcon} width={24} height={24} />
           </AutoLayout>
 
           <Text fontSize={18} fontWeight={400} width="fill-parent" fontFamily="Inter">
