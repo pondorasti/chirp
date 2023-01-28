@@ -34,11 +34,7 @@ export type ITweet = {
   }[]
 }
 
-type IResponse =
-  | ITweet
-  | {
-      error: string
-    }
+type IResponse = ITweet | { error: string }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<IResponse>) {
   await NextCors(req, res, {

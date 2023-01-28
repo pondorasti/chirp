@@ -23,6 +23,7 @@
 - [x] analytics
 - [ ] twitter card
 - [ ] footer
+- [ ] open graph
 - [ ] turborepo setup?
 
 ## Notes
