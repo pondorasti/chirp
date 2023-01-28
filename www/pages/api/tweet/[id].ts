@@ -16,6 +16,7 @@ export type ITweet = {
     retweetCount: number
     likeCount: number
     replyCount: number
+    impressionCount: number
   }
   author: {
     name: string
@@ -167,6 +168,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         (tweet.public_metrics?.retweet_count ?? 0) + (tweet.public_metrics?.quote_count ?? 0),
       likeCount: tweet.public_metrics?.like_count ?? 0,
       replyCount: tweet.public_metrics?.reply_count ?? 0,
+      // @ts-ignore - Twitter API is missing this field
+      impressionCount: tweet.public_metrics?.impression_count ?? 0,
     },
     author: {
       name: author.name,
