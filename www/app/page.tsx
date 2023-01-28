@@ -36,7 +36,7 @@ export default async function Home() {
   return (
     <div className="flex flex-col items-center min-h-screen pt-20 pb-10">
       <main>
-        <h1 className="text-4xl font-semibold mb-4">Twitter Widgets for Figma/FigJam</h1>
+        <h1 className="text-4xl font-semibold mb-4">Twitter Widget for Figma/FigJam</h1>
         <p className="text-2xl text-gray-600 font-medium text-center mb-8">
           Embed any tweets in figma
         </p>

@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "eslintConfig": {
+    "extends": "next/core-web-vitals"
+  },
   "dependencies": {
     "@next/font": "^13.1.6",
     "@vercel/analytics": "^0.1.8",

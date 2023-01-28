@@ -5,7 +5,7 @@ import { AnalyticsWrapper } from "./components/analytics"
 import clsx from "clsx"
 
 const satoshi = localFont({
-  src: "./Satoshi-Variable.woff2",
+  src: "../public/_static/Satoshi-Variable.woff2",
   variable: "--font-satoshi",
   weight: "400 600",
   display: "swap",
