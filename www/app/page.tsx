@@ -1,5 +1,5 @@
 import { ITweet } from "../pages/api/tweet/[id]"
-import { FigmaIcon, HeartIcon } from "./components/icons"
+import { FigmaIcon, HeartIcon, ImpressionsIcon, ReplyIcon, RetweetIcon } from "./components/icons"
 import Image from "next/image"
 
 const tweetIds = [
@@ -28,8 +28,33 @@ async function getTweets(): Promise<ITweet[]> {
   return tweets
 }
 
+const IntentGroup = ({
+  icon,
+  count,
+  href,
+}: {
+  icon: React.ReactNode
+  count: number
+  href: string
+}) => {
+  return (
+    <a
+      className="flex flex-row gap-1 items-center cursor-pointer hover:text-twitter-red group text-twitter-gray fill-twitter-gray"
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+    >
+      <div className="group-hover:bg-twitter-faded-red p-[7px] rounded-full">{icon}</div>
+      <span className="leading-none text-[13px]">
+        {count > 1000 ? `${(count / 1000).toFixed(1)}K` : count.toLocaleString()}
+      </span>
+    </a>
+  )
+}
+
 export default async function Home() {
   const tweets = await getTweets()
+  const tweet = tweets[0]
 
   console.log({ tweets })
 
@@ -41,12 +66,12 @@ export default async function Home() {
           Embed any tweets in figma
         </p>
 
-        <div className="bg-white p-8 flex flex-col gap-5 rounded-3xl shadow-lg font-inter max-w-md mx-auto">
-          <div className="flex gap-4">
-            {tweets[0].author.profileImageURI && (
+        <div className="bg-white p-8 flex flex-col gap-5 rounded-[32px] shadow-lg font-inter max-w-md mx-auto">
+          <div className="flex gap-3 items-center">
+            {tweet.author.profileImageURI && (
               <Image
-                src={tweets[0].author.profileImageURI}
-                alt={`${tweets[0].author.name}'s profile picture`}
+                src={tweet.author.profileImageURI}
+                alt={`${tweet.author.name}'s profile picture`}
                 width={48}
                 height={48}
                 className="rounded-full"
@@ -54,26 +79,43 @@ export default async function Home() {
               />
             )}
             <div className="flex flex-col">
-              <h3 className="text-md font-medium">{tweets[0].author.name}</h3>
-              <h4>@{tweets[0].author.username}</h4>
+              <h3 className="text-md font-medium leading-5">{tweets[0].author.name}</h3>
+              <h4 className="text-twitter-gray pt-0.5 leading-5">@{tweet.author.username}</h4>
             </div>
           </div>
 
-          <p>{tweets[0].text}</p>
+          <p className="text-base">{tweet.text}</p>
 
-          <div className="flex justify-between items-center">
-            <div className="flex flex-row gap-1 items-center cursor-pointer hover:text-twitter-red group">
-              <div className="group-hover:bg-twitter-faded-red p-2 rounded-full">
-                <HeartIcon />
-              </div>
-              <span>{tweets[0].publicMetrics.likeCount}</span>
-            </div>
-            <HeartIcon />
-            <HeartIcon />
+          <div className="flex justify-between items-center w-full -m-[7px]">
+            <IntentGroup
+              icon={<ReplyIcon />}
+              count={tweet.publicMetrics.replyCount}
+              href={`https://twitter.com/intent/tweet?in_reply_to=${tweet.id}`}
+            />
+            <IntentGroup
+              icon={<HeartIcon />}
+              count={tweet.publicMetrics.likeCount}
+              href={`https://twitter.com/intent/like?tweet_id=${tweet.id}`}
+            />
+            <IntentGroup
+              icon={<RetweetIcon />}
+              count={tweet.publicMetrics.retweetCount}
+              href={`https://twitter.com/intent/retweet?tweet_id=${tweet.id}`}
+            />
+            <IntentGroup
+              icon={<ImpressionsIcon />}
+              count={tweet.publicMetrics.retweetCount}
+              href={`https://twitter.com/${tweet?.author.username}/status/${tweet?.id}`}
+            />
           </div>
         </div>
 
-        <a className="flex items-center justify-center px-6 py-3 bg-twitter-blue rounded-full text-gray-50 gap-2 font-semibold text-lg w-fit mx-auto cursor-pointer mb-20">
+        <a
+          className="flex items-center justify-center px-6 py-3 bg-twitter-blue rounded-full text-gray-50 gap-2 font-semibold text-lg w-fit mx-auto cursor-pointer mb-20"
+          href="https://www.figma.com/community/widget/1167909952592149014"
+          target="_blank"
+          rel="noreferrer"
+        >
           <FigmaIcon />
           Install for free
         </a>

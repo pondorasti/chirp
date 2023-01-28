@@ -10,6 +10,7 @@
 - [x] gif/video cards
 - [x] icon -> https://icon.ray.so/
 - [x] twitter logo
+- [x] bottom padding negative offset
 - [ ] new intent group
 - [ ] annotated text
 - [ ] property menu
@@ -23,6 +24,7 @@
 - [x] analytics
 - [ ] twitter card
 - [ ] footer
+- [ ] fix public env var
 - [ ] open graph
 - [ ] turborepo setup?
 

@@ -1,4 +1,4 @@
-export function openURL(url: string): Promise<void> {
+export const openURL = (url: string): Promise<void> => {
   return new Promise((resolve) => {
     figma.showUI(__html__, { visible: false })
     figma.ui.postMessage({ type: "open-url", url })
@@ -33,7 +33,7 @@ export interface Tweet {
   }[]
 }
 
-export function fetchTweet(id: string): Promise<Tweet> {
+export const fetchTweet = (id: string): Promise<Tweet> => {
   return new Promise((resolve) => {
     figma.showUI(__html__, { visible: false })
     figma.ui.postMessage({ type: "fetch-tweet", id })

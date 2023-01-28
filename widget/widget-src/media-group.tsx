@@ -1,20 +1,20 @@
-import { playIcon, twitterBlue } from "./icons"
+import { playIcon, TWITTER_BRAND_BLUE } from "./icons"
 import { openURL, Tweet } from "./lib"
 
 const { widget } = figma
 const { AutoLayout, Image, Frame, Rectangle, SVG } = widget
 
-const cornerRadius = 12
-const adjacentPadding = 2
-const playButtonContainer = 64
-const playButtonSize = 42
+const CORNER_RADIUS = 12
+const ADJACENT_PADDING = 2
+const PLAY_BUTTON_CONTAINER = 64
+const PLAY_BUTTON_SIZE = 42
 
-const maxWidth = 320
-const minWidth = (maxWidth + adjacentPadding) / 2
+const MAX_WIDTH = 320
+const MIN_WIDTH = (MAX_WIDTH + ADJACENT_PADDING) / 2
 
-const compactRatio = 1.8
+const COMPACT_RATIO = 1.8
 
-export default function MediaGroup({ media }: { media: Tweet["media"] }) {
+export const MediaGroup = ({ media }: { media: Tweet["media"] }) => {
   switch (media.length) {
     case 0: {
       return null
@@ -23,35 +23,35 @@ export default function MediaGroup({ media }: { media: Tweet["media"] }) {
     case 1: {
       const item = media[0]
       const aspectRatio = item.width / item.height
-      const width = Math.min(maxWidth, item.width)
+      const width = Math.min(MAX_WIDTH, item.width)
       const height = width / aspectRatio
 
       return (
         <Frame
           width={width}
           height={height}
-          cornerRadius={cornerRadius}
+          cornerRadius={CORNER_RADIUS}
           onClick={() => openURL(item.url)}
         >
           <Image src={item.uri} width={width} height={height} />
           {item.type === "video" && (
             <>
               <Rectangle
-                width={playButtonContainer}
-                height={playButtonContainer}
-                x={(width - playButtonContainer) / 2}
-                y={(height - playButtonContainer) / 2}
-                cornerRadius={playButtonContainer}
-                fill={twitterBlue}
+                width={PLAY_BUTTON_CONTAINER}
+                height={PLAY_BUTTON_CONTAINER}
+                x={(width - PLAY_BUTTON_CONTAINER) / 2}
+                y={(height - PLAY_BUTTON_CONTAINER) / 2}
+                cornerRadius={PLAY_BUTTON_CONTAINER}
+                fill={TWITTER_BRAND_BLUE}
                 strokeWidth={3}
                 stroke="#fff"
               />
               <SVG
                 src={playIcon}
-                width={playButtonSize}
-                height={playButtonSize}
-                x={(width - playButtonSize) / 2 + 2}
-                y={(height - playButtonSize) / 2}
+                width={PLAY_BUTTON_SIZE}
+                height={PLAY_BUTTON_SIZE}
+                x={(width - PLAY_BUTTON_SIZE) / 2 + 2}
+                y={(height - PLAY_BUTTON_SIZE) / 2}
               />
             </>
           )}
@@ -63,7 +63,7 @@ export default function MediaGroup({ media }: { media: Tweet["media"] }) {
       // Find min height element
       const maxHeight = media.reduce((_, item) => {
         const aspectRatio = item.width / item.height
-        const width = Math.min(minWidth, item.width)
+        const width = Math.min(MIN_WIDTH, item.width)
         const height = width / aspectRatio
 
         return height
@@ -73,7 +73,7 @@ export default function MediaGroup({ media }: { media: Tweet["media"] }) {
         <AutoLayout
           name="media-container"
           direction="horizontal"
-          spacing={adjacentPadding}
+          spacing={ADJACENT_PADDING}
           verticalAlignItems="center"
           horizontalAlignItems="center"
         >
@@ -81,13 +81,13 @@ export default function MediaGroup({ media }: { media: Tweet["media"] }) {
             <Image
               key={item.id}
               src={item.uri}
-              width={minWidth}
+              width={MIN_WIDTH}
               height={maxHeight}
               cornerRadius={{
-                topLeft: index === 0 ? cornerRadius : 0,
-                topRight: index === 1 ? cornerRadius : 0,
-                bottomLeft: index === 0 ? cornerRadius : 0,
-                bottomRight: index === 1 ? cornerRadius : 0,
+                topLeft: index === 0 ? CORNER_RADIUS : 0,
+                topRight: index === 1 ? CORNER_RADIUS : 0,
+                bottomLeft: index === 0 ? CORNER_RADIUS : 0,
+                bottomRight: index === 1 ? CORNER_RADIUS : 0,
               }}
               onClick={() => openURL(item.url)}
             />
@@ -101,7 +101,7 @@ export default function MediaGroup({ media }: { media: Tweet["media"] }) {
         <AutoLayout
           name="media-container"
           direction="horizontal"
-          spacing={adjacentPadding}
+          spacing={ADJACENT_PADDING}
           verticalAlignItems="center"
           horizontalAlignItems="center"
         >
@@ -109,12 +109,12 @@ export default function MediaGroup({ media }: { media: Tweet["media"] }) {
             <Image
               key={item.id}
               src={item.uri}
-              width={minWidth}
-              height={(minWidth / compactRatio) * 2 + adjacentPadding}
+              width={MIN_WIDTH}
+              height={(MIN_WIDTH / COMPACT_RATIO) * 2 + ADJACENT_PADDING}
               cornerRadius={{
-                topLeft: cornerRadius,
+                topLeft: CORNER_RADIUS,
                 topRight: 0,
-                bottomLeft: cornerRadius,
+                bottomLeft: CORNER_RADIUS,
                 bottomRight: 0,
               }}
               onClick={() => openURL(item.url)}
@@ -123,7 +123,7 @@ export default function MediaGroup({ media }: { media: Tweet["media"] }) {
           <AutoLayout
             name="media-col-two"
             direction="vertical"
-            spacing={adjacentPadding}
+            spacing={ADJACENT_PADDING}
             verticalAlignItems="center"
             horizontalAlignItems="center"
           >
@@ -131,13 +131,13 @@ export default function MediaGroup({ media }: { media: Tweet["media"] }) {
               <Image
                 key={item.id}
                 src={item.uri}
-                width={minWidth}
-                height={minWidth / compactRatio}
+                width={MIN_WIDTH}
+                height={MIN_WIDTH / COMPACT_RATIO}
                 cornerRadius={{
                   topLeft: 0,
-                  topRight: index === 0 ? cornerRadius : 0,
+                  topRight: index === 0 ? CORNER_RADIUS : 0,
                   bottomLeft: 0,
-                  bottomRight: index === 1 ? cornerRadius : 0,
+                  bottomRight: index === 1 ? CORNER_RADIUS : 0,
                 }}
                 onClick={() => openURL(item.url)}
               />
@@ -152,14 +152,14 @@ export default function MediaGroup({ media }: { media: Tweet["media"] }) {
         <AutoLayout
           name="media-container"
           direction="vertical"
-          spacing={adjacentPadding}
+          spacing={ADJACENT_PADDING}
           verticalAlignItems="center"
           horizontalAlignItems="center"
         >
           <AutoLayout
             name="media-row-one"
             direction="horizontal"
-            spacing={adjacentPadding}
+            spacing={ADJACENT_PADDING}
             verticalAlignItems="center"
             horizontalAlignItems="center"
           >
@@ -167,11 +167,11 @@ export default function MediaGroup({ media }: { media: Tweet["media"] }) {
               <Image
                 key={item.id}
                 src={item.uri}
-                width={minWidth}
-                height={minWidth / compactRatio}
+                width={MIN_WIDTH}
+                height={MIN_WIDTH / COMPACT_RATIO}
                 cornerRadius={{
-                  topLeft: index === 0 ? cornerRadius : 0,
-                  topRight: index === 1 ? cornerRadius : 0,
+                  topLeft: index === 0 ? CORNER_RADIUS : 0,
+                  topRight: index === 1 ? CORNER_RADIUS : 0,
                   bottomLeft: 0,
                   bottomRight: 0,
                 }}
@@ -182,7 +182,7 @@ export default function MediaGroup({ media }: { media: Tweet["media"] }) {
           <AutoLayout
             name="media-row-two"
             direction="horizontal"
-            spacing={adjacentPadding}
+            spacing={ADJACENT_PADDING}
             verticalAlignItems="center"
             horizontalAlignItems="center"
           >
@@ -190,13 +190,13 @@ export default function MediaGroup({ media }: { media: Tweet["media"] }) {
               <Image
                 key={item.id}
                 src={item.uri}
-                width={minWidth}
-                height={minWidth / compactRatio}
+                width={MIN_WIDTH}
+                height={MIN_WIDTH / COMPACT_RATIO}
                 cornerRadius={{
                   topLeft: 0,
                   topRight: 0,
-                  bottomLeft: index === 0 ? cornerRadius : 0,
-                  bottomRight: index === 1 ? cornerRadius : 0,
+                  bottomLeft: index === 0 ? CORNER_RADIUS : 0,
+                  bottomRight: index === 1 ? CORNER_RADIUS : 0,
                 }}
                 onClick={() => openURL(item.url)}
               />

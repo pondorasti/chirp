@@ -14,6 +14,7 @@ module.exports = {
         "twitter-blue": "#1d9bf0",
         "twitter-red": "#f91880",
         "twitter-faded-red": "#f7e0eb",
+        "twitter-gray": "#536471",
         gray: {
           ...colors.neutral,
         },

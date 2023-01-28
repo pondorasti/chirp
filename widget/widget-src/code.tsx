@@ -4,26 +4,30 @@ import {
   activeRetweetIcon,
   externalLinkIcon,
   heartIcon,
-  likeBackgroundAccent,
-  likeForegroundAccent,
+  impressionsIcon,
+  TWITTER_FADED_RED,
+  TWITTER_RED,
   refreshIcon,
-  replyBackgroundAccent,
-  replyForegroundAccent,
+  TWITTER_FADED_BLUE,
+  TWITTER_BLUE,
   replyIcon,
-  retweetBackgroundAccent,
-  retweetForegroundAccent,
+  TWITTER_FADED_GREEN,
+  TWITTER_GREEN,
   retweetIcon,
   slidersIcon,
-  textSecondary,
+  TWITTER_GRAY_SECONDARY,
   twitterIcon,
+  activeImpressionsIcon,
 } from "./icons"
-import IntentGroup from "./IntentGroup"
-import MediaGroup from "./MediaGroup"
-import Form from "./Form"
+import { IntentGroup, UNDERLAY_OFFSET } from "./intent-group"
+import { MediaGroup } from "./media-group"
+import { Form } from "./form"
 import { fetchTweet, openURL, Tweet } from "./lib"
 
 const { widget } = figma
 const { usePropertyMenu, useSyncedState, AutoLayout, Text, Image, SVG } = widget
+
+const CARD_PADDING = 32
 
 function Widget() {
   const [tweet, setTweet] = useSyncedState<Tweet | null>("tweet", null)
@@ -75,7 +79,13 @@ function Widget() {
   return (
     <AutoLayout
       name="body"
-      padding={32}
+      padding={{
+        top: CARD_PADDING,
+        right: CARD_PADDING,
+        // offset negative padding creating by `<IntentGroup>`
+        bottom: tweet ? CARD_PADDING - UNDERLAY_OFFSET : CARD_PADDING,
+        left: CARD_PADDING,
+      }}
       spacing={tweet ? 20 : 32}
       cornerRadius={32}
       width={384}
@@ -146,7 +156,7 @@ function Widget() {
                 fontWeight={400}
                 width="fill-parent"
                 fontFamily="Inter"
-                fill={textSecondary}
+                fill={TWITTER_GRAY_SECONDARY}
                 onClick={() => openURL(`https://twitter.com/${tweet.author.username}`)}
               >
                 @{tweet.author.username}
@@ -155,7 +165,13 @@ function Widget() {
             <SVG src={twitterIcon} width={24} height={24} />
           </AutoLayout>
 
-          <Text fontSize={18} fontWeight={400} width="fill-parent" fontFamily="Inter">
+          <Text
+            fontSize={16}
+            lineHeight={24}
+            fontWeight={400}
+            width="fill-parent"
+            fontFamily="Inter"
+          >
             {tweet.text}
           </Text>
 
@@ -163,7 +179,8 @@ function Widget() {
 
           <AutoLayout
             name="metrics-container"
-            spacing={8}
+            width="fill-parent"
+            spacing="auto"
             direction="horizontal"
             horizontalAlignItems="start"
             verticalAlignItems="center"
@@ -173,8 +190,8 @@ function Widget() {
               isFirst
               name="reply-intent"
               count={tweet.publicMetrics.replyCount}
-              foregroundFill={replyForegroundAccent}
-              backgroundFill={replyBackgroundAccent}
+              foregroundFill={TWITTER_BLUE}
+              backgroundFill={TWITTER_FADED_BLUE}
               icon={replyIcon}
               activeIcon={activeReplyIcon}
               onClick={() => openURL(`https://twitter.com/intent/tweet?in_reply_to=${tweet.id}`)}
@@ -183,8 +200,8 @@ function Widget() {
             <IntentGroup
               name="retweet-intent"
               count={tweet.publicMetrics.retweetCount}
-              foregroundFill={retweetForegroundAccent}
-              backgroundFill={retweetBackgroundAccent}
+              foregroundFill={TWITTER_GREEN}
+              backgroundFill={TWITTER_FADED_GREEN}
               icon={retweetIcon}
               activeIcon={activeRetweetIcon}
               onClick={() => openURL(`https://twitter.com/intent/retweet?tweet_id=${tweet.id}`)}
@@ -193,11 +210,23 @@ function Widget() {
             <IntentGroup
               name="like-intent"
               count={tweet.publicMetrics.likeCount}
-              foregroundFill={likeForegroundAccent}
-              backgroundFill={likeBackgroundAccent}
+              foregroundFill={TWITTER_RED}
+              backgroundFill={TWITTER_FADED_RED}
               icon={heartIcon}
               activeIcon={activeHeartIcon}
               onClick={() => openURL(`https://twitter.com/intent/like?tweet_id=${tweet.id}`)}
+            />
+
+            <IntentGroup
+              name="impressions-intent"
+              count={tweet.publicMetrics.likeCount}
+              foregroundFill={TWITTER_BLUE}
+              backgroundFill={TWITTER_FADED_BLUE}
+              icon={impressionsIcon}
+              activeIcon={activeImpressionsIcon}
+              onClick={() =>
+                openURL(`https://twitter.com/${tweet?.author.username}/status/${tweet?.id}`)
+              }
             />
           </AutoLayout>
         </>

@@ -1,10 +1,10 @@
-import { twitterBlue } from "./icons"
+import { TWITTER_BRAND_BLUE } from "./icons"
 import { fetchTweet, Tweet } from "./lib"
 
 const { widget } = figma
 const { useSyncedState, AutoLayout, Input, Text } = widget
 
-export default function Form() {
+export const Form = () => {
   const [tweetInput, setTweetInput] = useSyncedState("tweetInput", "")
   const [, setTweet] = useSyncedState<Tweet | null>("tweet", null)
 
@@ -50,7 +50,7 @@ export default function Form() {
         horizontalAlignItems="center"
         verticalAlignItems="center"
         width="fill-parent"
-        fill={twitterBlue}
+        fill={TWITTER_BRAND_BLUE}
         onClick={async () => {
           // get id after the last slash and trim everything after question mark
           // ex: https://twitter.com/lavieestbelIe/status/1589649527195115520 → 1589649527195115520
