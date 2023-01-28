@@ -1,7 +1,21 @@
 {
-  "name": "chirp",
-  "description": "Your Figma widget",
   "version": "1.0.0",
+  "name": "Chirp - Embed Tweets in your Figma or FigJam files",
+  "description": "Your Figma widget",
+  "keywords": [
+    "twitter",
+    "tweet",
+    "retweet",
+    "embed",
+    "thread",
+    "twtr",
+    "social",
+    "media",
+    "network",
+    "blog",
+    "blue",
+    "bird"
+  ],
   "author": "Alexandru Ţurcanu",
   "license": "MIT",
   "scripts": {

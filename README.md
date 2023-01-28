@@ -1,21 +1,29 @@
 # Chirp
 
 ## TODO
+### widget
+
 - [x] intents (retweet, like, comment)
 - [x] tweet url unfurl
 - [x] layout pixel peeping
 - [x] image cards
-- [ ] annotated text
-- [ ] twitter logo
 - [x] gif/video cards
 - [x] icon -> https://icon.ray.so/
+- [x] twitter logo
+- [ ] new intent group
+- [ ] annotated text
+- [ ] property menu
+- [ ] description
+- [ ] banner
 - [ ] alt text
 
+### www
 - [x] custom font
 - [x] domain
 - [x] analytics
 - [ ] twitter card
 - [ ] footer
+- [ ] turborepo setup?
 
 ## Notes
 

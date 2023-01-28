@@ -2,7 +2,7 @@
   window.onmessage = async (event) => {
     if (event.data.pluginMessage.type === 'fetch-tweet' && !!event.data.pluginMessage.id) {
       var request = new XMLHttpRequest()
-      request.open('GET', `http://localhost:3000/api/tweet/${event.data.pluginMessage.id}`) // https://alexandru.so
+      request.open('GET', `https://chirp.alexandru.so/api/tweet/${event.data.pluginMessage.id}`) // https://alexandru.so
       request.responseType = 'json'
       request.onload = () => {
         window.parent.postMessage({ pluginMessage: request.response }, '*')
