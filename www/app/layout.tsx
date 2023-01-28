@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="description" content="Embed Tweets in your Figma or FigJam files" />
         <link rel="icon" href="/favicon.ico" />
       </head>
-      <body className="bg-gray-100">
+      <body className="bg-gray-100 antialiased">
         {children}
         <AnalyticsWrapper />
       </body>

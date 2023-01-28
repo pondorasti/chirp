@@ -15,6 +15,7 @@ export interface Tweet {
     retweetCount: number
     likeCount: number
     replyCount: number
+    impressionCount: number
   }
   author: {
     name: string

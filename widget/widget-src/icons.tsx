@@ -1,14 +1,14 @@
 export const TWITTER_BRAND_BLUE = "#1DA1F2"
 export const TWITTER_GRAY_SECONDARY = "#536471"
 
-export const TWITTER_RED = "#f91880"
-export const TWITTER_FADED_RED = "#f7e0eb"
+export const TWITTER_RED = "#F91880"
+export const TWITTER_FADED_RED = "#F7E0EB"
 
-export const TWITTER_GREEN = "#00ba7c"
-export const TWITTER_FADED_GREEN = "#def1eb"
+export const TWITTER_GREEN = "#00BA7C"
+export const TWITTER_FADED_GREEN = "#DEF1EB"
 
-export const TWITTER_BLUE = "#1d9bf0"
-export const TWITTER_FADED_BLUE = "#e4eef7"
+export const TWITTER_BLUE = "#1D9BF0"
+export const TWITTER_FADED_BLUE = "#E4EEF7"
 
 export const refreshIcon = `<svg width="40" height="40" viewBox="-8 -8 40 40" fill="none" stroke="#fff" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
 <polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline>
@@ -73,13 +73,13 @@ export const playIcon = `<svg width="24" height="24" viewBox="0 0 24 24" fill="#
 </svg>
 `
 
-export const impressionsIcon = `<svg width="24" height="24" viewBox="0 0 24 24" fill="${TWITTER_GRAY_SECONDARY}" stroke="none" xmlns="http://www.w3.org/2000/svg">
+export const impressionIcon = `<svg width="24" height="24" viewBox="0 0 24 24" fill="${TWITTER_GRAY_SECONDARY}" stroke="none" xmlns="http://www.w3.org/2000/svg">
 <g>
 <path d="M8.75 21V3h2v18h-2zM18 21V8.5h2V21h-2zM4 21l.004-10h2L6 21H4zm9.248 0v-7h2v7h-2z"></path>
 </g>
 </svg>`
 
-export const activeImpressionsIcon = `<svg width="24" height="24" viewBox="0 0 24 24" fill="${TWITTER_BLUE}" stroke="none" xmlns="http://www.w3.org/2000/svg">
+export const activeImpressionIcon = `<svg width="24" height="24" viewBox="0 0 24 24" fill="${TWITTER_BLUE}" stroke="none" xmlns="http://www.w3.org/2000/svg">
 <g>
 <path d="M8.75 21V3h2v18h-2zM18 21V8.5h2V21h-2zM4 21l.004-10h2L6 21H4zm9.248 0v-7h2v7h-2z"></path>
 </g>

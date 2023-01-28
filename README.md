@@ -11,18 +11,17 @@
 - [x] icon -> https://icon.ray.so/
 - [x] twitter logo
 - [x] bottom padding negative offset
-- [ ] new intent group
-- [ ] annotated text
-- [ ] property menu
+- [x] new intent group
+- [x] property menu
 - [ ] description
 - [ ] banner
-- [ ] alt text
 
 ### www
 - [x] custom font
 - [x] domain
 - [x] analytics
-- [ ] twitter card
+- [x] twitter card
+- [ ] tilt
 - [ ] footer
 - [ ] fix public env var
 - [ ] open graph

@@ -1,28 +1,28 @@
+import { Form } from "./form"
 import {
   activeHeartIcon,
+  activeImpressionIcon,
   activeReplyIcon,
   activeRetweetIcon,
   externalLinkIcon,
   heartIcon,
-  impressionsIcon,
-  TWITTER_FADED_RED,
-  TWITTER_RED,
+  impressionIcon,
   refreshIcon,
-  TWITTER_FADED_BLUE,
-  TWITTER_BLUE,
   replyIcon,
-  TWITTER_FADED_GREEN,
-  TWITTER_GREEN,
   retweetIcon,
   slidersIcon,
-  TWITTER_GRAY_SECONDARY,
   twitterIcon,
-  activeImpressionsIcon,
+  TWITTER_BLUE,
+  TWITTER_FADED_BLUE,
+  TWITTER_FADED_GREEN,
+  TWITTER_FADED_RED,
+  TWITTER_GRAY_SECONDARY,
+  TWITTER_GREEN,
+  TWITTER_RED,
 } from "./icons"
 import { IntentGroup, UNDERLAY_OFFSET } from "./intent-group"
-import { MediaGroup } from "./media-group"
-import { Form } from "./form"
 import { fetchTweet, openURL, Tweet } from "./lib"
+import { MediaGroup } from "./media-group"
 
 const { widget } = figma
 const { usePropertyMenu, useSyncedState, AutoLayout, Text, Image, SVG } = widget
@@ -162,7 +162,14 @@ function Widget() {
                 @{tweet.author.username}
               </Text>
             </AutoLayout>
-            <SVG src={twitterIcon} width={24} height={24} />
+            <SVG
+              src={twitterIcon}
+              width={24}
+              height={24}
+              onClick={() =>
+                openURL(`https://twitter.com/${tweet?.author.username}/status/${tweet?.id}`)
+              }
+            />
           </AutoLayout>
 
           <Text
@@ -217,17 +224,19 @@ function Widget() {
               onClick={() => openURL(`https://twitter.com/intent/like?tweet_id=${tweet.id}`)}
             />
 
-            <IntentGroup
-              name="impressions-intent"
-              count={tweet.publicMetrics.likeCount}
-              foregroundFill={TWITTER_BLUE}
-              backgroundFill={TWITTER_FADED_BLUE}
-              icon={impressionsIcon}
-              activeIcon={activeImpressionsIcon}
-              onClick={() =>
-                openURL(`https://twitter.com/${tweet?.author.username}/status/${tweet?.id}`)
-              }
-            />
+            {tweet.publicMetrics.impressionCount > 0 && (
+              <IntentGroup
+                name="impression-intent"
+                count={tweet.publicMetrics.impressionCount}
+                foregroundFill={TWITTER_BLUE}
+                backgroundFill={TWITTER_FADED_BLUE}
+                icon={impressionIcon}
+                activeIcon={activeImpressionIcon}
+                onClick={() =>
+                  openURL(`https://twitter.com/${tweet?.author.username}/status/${tweet?.id}`)
+                }
+              />
+            )}
           </AutoLayout>
         </>
       ) : (

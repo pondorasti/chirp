@@ -11,9 +11,13 @@ module.exports = {
         inter: ["var(--font-inter)", ...fontFamily.sans],
       },
       colors: {
-        "twitter-blue": "#1d9bf0",
-        "twitter-red": "#f91880",
-        "twitter-faded-red": "#f7e0eb",
+        "twitter-brand-blue": "#1DA1F2",
+        "twitter-blue": "#1D9BF0",
+        "twitter-faded-blue": "#E4EEF7",
+        "twitter-red": "#F91880",
+        "twitter-faded-red": "#F7E0EB",
+        "twitter-green": "#00BA7C",
+        "twitter-faded-green": "#DEF1EB",
         "twitter-gray": "#536471",
         gray: {
           ...colors.neutral,
