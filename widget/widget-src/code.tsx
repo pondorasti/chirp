@@ -15,6 +15,7 @@ import {
   retweetIcon,
   slidersIcon,
   textSecondary,
+  twitterIcon,
 } from "./icons"
 import IntentGroup from "./IntentGroup"
 import MediaGroup from "./MediaGroup"
@@ -22,7 +23,7 @@ import Form from "./Form"
 import { fetchTweet, openURL, Tweet } from "./lib"
 
 const { widget } = figma
-const { usePropertyMenu, useSyncedState, AutoLayout, Text, Image } = widget
+const { usePropertyMenu, useSyncedState, AutoLayout, Text, Image, SVG } = widget
 
 function Widget() {
   const [tweet, setTweet] = useSyncedState<Tweet | null>("tweet", null)
