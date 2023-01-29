@@ -1,3 +1,26 @@
+# Widget
+
+## Description
+
+Embed Tweets in your Figma or FigJam files.
+
+**Features**
+
+* multiple image attachments
+* video attachments
+* deep linking
+* refresh metadate
+
+**Feedback**
+
+Something feels little off? Don't hesitate to send me a DM [@pondorasti](https://twitter.com/pondorasti) or open an issue on [Github](https://github.com/Pondorasti/chirp/issues/new).
+
+**Open Source**
+
+Chirp's implementation is proudly open-source on [Github](https://github.com/Pondorasti/chirp) with MIT [license](https://github.com/Pondorasti/chirp/blob/main/license).
+
+## Development
+
 Below are the steps to get your widget running. You can also find instructions at:
 
 https://www.figma.com/widget-docs/setup-guide/
@@ -11,7 +34,9 @@ https://nodejs.org/en/download/
 
 Next, install TypeScript, esbuild and the latest type definitions by running:
 
+```
 npm install
+```
 
 If you are familiar with JavaScript, TypeScript will look very familiar. In fact, valid JavaScript code
 is already valid Typescript code.
