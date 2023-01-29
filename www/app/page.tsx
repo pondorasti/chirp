@@ -7,6 +7,7 @@ import {
   RetweetIcon,
   TwitterIcon,
 } from "./components/icons"
+import { TiltWrapper } from "./components/tilt"
 import Image from "next/image"
 import clsx from "clsx"
 
@@ -55,7 +56,7 @@ const IntentGroup = ({
   return (
     <a
       className={clsx(
-        "flex flex-row gap-1 items-center cursor-pointer group text-twitter-gray fill-twitter-gray",
+        "flex flex-row gap-1 items-center cursor-pointer group/intent text-twitter-gray fill-twitter-gray",
         foregroundColor
       )}
       href={href}
@@ -73,20 +74,23 @@ const IntentGroup = ({
   )
 }
 
+const PARALLAX_STYLE =
+  "group-hover:[transform:translateZ(30px)] transition-transform duration-[600ms]"
+
 export default async function Home() {
   const tweets = await getTweets()
   const tweet = tweets[0]
 
   return (
-    <div className="flex flex-col items-center min-h-screen pt-20 pb-10">
-      <main>
-        <h1 className="text-4xl font-semibold mb-4">Twitter Widget for Figma/FigJam</h1>
-        <p className="text-2xl text-gray-600 font-medium text-center mb-8">
+    <div className="flex flex-col items-center min-h-screen pt-32 pb-10 px-6">
+      <main className="contents">
+        <h1 className="text-4xl font-semibold mb-4 text-center">Twitter Widget for Figma/FigJam</h1>
+        <p className="text-2xl text-gray-600 font-medium text-center mb-16">
           Embed any tweets in figma
         </p>
 
-        <div className="bg-white p-8 flex flex-col gap-5 rounded-[32px] shadow-lg font-inter max-w-md mx-auto">
-          <div className="flex gap-3 items-center">
+        <TiltWrapper className="[transform-style:preserve-3d] group bg-white p-8 flex flex-col gap-5 rounded-[32px] shadow-lg font-inter max-w-md">
+          <div className={clsx("flex gap-3 items-center", PARALLAX_STYLE)}>
             {tweet.author.profileImageURI && (
               <a
                 href={`https://twitter.com/${tweet.author.username}`}
@@ -132,15 +136,17 @@ export default async function Home() {
             </a>
           </div>
 
-          <p className="text-lg">{tweet.text}</p>
+          <p className={clsx("text-lg", PARALLAX_STYLE)}>{tweet.text}</p>
 
-          <div className="flex justify-between items-center w-full -m-[7px]">
+          <div
+            className={clsx("flex justify-between items-center w-full -m-[7px]", PARALLAX_STYLE)}
+          >
             <IntentGroup
               icon={<ReplyIcon />}
               count={tweet.publicMetrics.replyCount}
               label="replies"
               foregroundColor="hover:text-twitter-blue"
-              backgroundColor="group-hover:bg-twitter-faded-blue"
+              backgroundColor="group-hover/intent:bg-twitter-faded-blue"
               href={`https://twitter.com/intent/tweet?in_reply_to=${tweet.id}`}
             />
             <IntentGroup
@@ -148,7 +154,7 @@ export default async function Home() {
               count={tweet.publicMetrics.likeCount}
               label="likes"
               foregroundColor="hover:text-twitter-red"
-              backgroundColor="group-hover:bg-twitter-faded-red"
+              backgroundColor="group-hover/intent:bg-twitter-faded-red"
               href={`https://twitter.com/intent/like?tweet_id=${tweet.id}`}
             />
             <IntentGroup
@@ -156,7 +162,7 @@ export default async function Home() {
               count={tweet.publicMetrics.retweetCount}
               label="retweets"
               foregroundColor="hover:text-twitter-green"
-              backgroundColor="group-hover:bg-twitter-faded-green"
+              backgroundColor="group-hover/intent:bg-twitter-faded-green"
               href={`https://twitter.com/intent/retweet?tweet_id=${tweet.id}`}
             />
             {tweet.publicMetrics.impressionCount > 0 && (
@@ -165,15 +171,15 @@ export default async function Home() {
                 count={tweet.publicMetrics.impressionCount}
                 label="impressions"
                 foregroundColor="hover:text-twitter-blue"
-                backgroundColor="group-hover:bg-twitter-faded-blue"
+                backgroundColor="group-hover/intent:bg-twitter-faded-blue"
                 href={`https://twitter.com/${tweet?.author.username}/status/${tweet?.id}`}
               />
             )}
           </div>
-        </div>
+        </TiltWrapper>
 
         <a
-          className="flex items-center justify-center px-6 py-3 bg-twitter-blue rounded-full text-gray-50 gap-2 font-semibold text-lg w-fit mx-auto cursor-pointer mb-20"
+          className="flex items-center justify-center px-6 py-3 bg-twitter-blue rounded-full text-gray-50 gap-2 font-semibold text-lg w-fit mx-auto cursor-pointer mt-16 mb-20"
           href="https://www.figma.com/community/widget/1167909952592149014"
           target="_blank"
           rel="noreferrer"
