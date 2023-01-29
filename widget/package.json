@@ -1,7 +1,7 @@
 {
-  "version": "2.0.0",
-  "name": "Chirp - Embed Tweets in your Figma or FigJam files",
-  "description": "Your Figma widget",
+  "version": "3.0.0",
+  "name": "Chirp",
+  "description": "Embed Tweets in your Figma or FigJam files",
   "keywords": [
     "twitter",
     "tweet",
