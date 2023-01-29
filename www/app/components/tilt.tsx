@@ -15,7 +15,6 @@ export const TiltWrapper: React.FC<Readonly<TiltWrapperProps>> = ({ className, c
     tiltMaxAngleX={5}
     tiltMaxAngleY={5}
     transitionSpeed={600}
-    gyroscope
     glareEnable
     glarePosition="all"
     glareMaxOpacity={0.08}

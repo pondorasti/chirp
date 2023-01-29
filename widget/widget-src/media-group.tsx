@@ -1,4 +1,4 @@
-import { playIcon, TWITTER_BRAND_BLUE } from "./icons"
+import { playIcon, TWITTER_BRAND_BLUE, TWITTER_GRAY_BORDER } from "./icons"
 import { openURL, Tweet } from "./lib"
 
 const { widget } = figma
@@ -8,6 +8,7 @@ const CORNER_RADIUS = 12
 const ADJACENT_PADDING = 2
 const PLAY_BUTTON_CONTAINER = 64
 const PLAY_BUTTON_SIZE = 42
+const STROKE_WIDTH = 1
 
 const MAX_WIDTH = 320
 const MIN_WIDTH = (MAX_WIDTH + ADJACENT_PADDING) / 2
@@ -31,6 +32,8 @@ export const MediaGroup = ({ media }: { media: Tweet["media"] }) => {
           width={width}
           height={height}
           cornerRadius={CORNER_RADIUS}
+          stroke={TWITTER_GRAY_BORDER}
+          strokeWidth={STROKE_WIDTH}
           onClick={() => openURL(item.url)}
         >
           <Image src={item.uri} width={width} height={height} />
@@ -76,6 +79,9 @@ export const MediaGroup = ({ media }: { media: Tweet["media"] }) => {
           spacing={ADJACENT_PADDING}
           verticalAlignItems="center"
           horizontalAlignItems="center"
+          stroke={TWITTER_GRAY_BORDER}
+          strokeWidth={STROKE_WIDTH}
+          cornerRadius={CORNER_RADIUS}
         >
           {media.map((item, index) => (
             <Image
@@ -104,6 +110,9 @@ export const MediaGroup = ({ media }: { media: Tweet["media"] }) => {
           spacing={ADJACENT_PADDING}
           verticalAlignItems="center"
           horizontalAlignItems="center"
+          stroke={TWITTER_GRAY_BORDER}
+          strokeWidth={STROKE_WIDTH}
+          cornerRadius={CORNER_RADIUS}
         >
           {media.slice(0, 1).map((item) => (
             <Image
@@ -155,6 +164,9 @@ export const MediaGroup = ({ media }: { media: Tweet["media"] }) => {
           spacing={ADJACENT_PADDING}
           verticalAlignItems="center"
           horizontalAlignItems="center"
+          stroke={TWITTER_GRAY_BORDER}
+          strokeWidth={STROKE_WIDTH}
+          cornerRadius={CORNER_RADIUS}
         >
           <AutoLayout
             name="media-row-one"

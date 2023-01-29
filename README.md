@@ -13,15 +13,17 @@
 - [x] bottom padding negative offset
 - [x] new intent group
 - [x] property menu
-- [ ] description
-- [ ] banner
+- [x] description
+- [x] banner
+- [x] img border
 
 ### www
 - [x] custom font
 - [x] domain
 - [x] analytics
 - [x] twitter card
-- [ ] tilt
+- [x] tilt
+- [ ] mobile
 - [ ] footer
 - [ ] fix public env var
 - [ ] open graph

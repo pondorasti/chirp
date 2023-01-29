@@ -1,5 +1,6 @@
 export const TWITTER_BRAND_BLUE = "#1DA1F2"
 export const TWITTER_GRAY_SECONDARY = "#536471"
+export const TWITTER_GRAY_BORDER = "#CFD9DE"
 
 export const TWITTER_RED = "#F91880"
 export const TWITTER_FADED_RED = "#F7E0EB"
