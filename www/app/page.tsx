@@ -1,3 +1,4 @@
+export { reportWebVitals } from "next-axiom"
 import { ITweet } from "../pages/api/tweet/[id]"
 import {
   FigmaIcon,
