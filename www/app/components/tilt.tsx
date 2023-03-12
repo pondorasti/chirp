@@ -12,8 +12,8 @@ export const TiltWrapper: React.FC<Readonly<TiltWrapperProps>> = ({ className, c
     className={clsx(className)}
     perspective={880}
     trackOnWindow={false}
-    tiltMaxAngleX={5}
-    tiltMaxAngleY={5}
+    tiltMaxAngleX={2}
+    tiltMaxAngleY={2}
     transitionSpeed={600}
     glareEnable
     glarePosition="all"
