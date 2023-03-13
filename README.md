@@ -29,8 +29,9 @@
 - [ ] mobile
 - [ ] footer
 - [ ] suspense - 100 vitals score?
-- [ ] fix public env var
+- [x] fix public env var
 - [ ] open graph
+- [x] favicon 
 
 ## Notes
 
