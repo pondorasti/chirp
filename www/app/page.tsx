@@ -1,3 +1,4 @@
+import clsx from "clsx"
 import { ITweet } from "../pages/api/tweet/[id]"
 import { FigmaIcon } from "./components/icons"
 import { Tweet } from "./components/tweet"
@@ -38,8 +39,6 @@ const tweetIds = [
 ]
 
 async function getTweets(): Promise<ITweet[]> {
-  const shuffledTweets = tweetIds.sort(() => 0.5 - Math.random())
-  // const ids = shuffledTweets.slice(0, 7)
   const ids = tweetIds
   const tweets = await Promise.all(
     ids.map(async (id) => {
@@ -54,17 +53,32 @@ async function getTweets(): Promise<ITweet[]> {
   return tweets
 }
 
+const SIDE_OVERLAY_STYLE =
+  "pointer-events-none absolute z-10 from-white to-transparent will-change-transform backdrop-blur-[1px]"
+
 export default async function Home() {
   const tweets = await getTweets()
 
   return (
     <>
-      <div className="pointer-events-none absolute -top-1 z-10 h-20 w-full bg-gradient-to-b from-white to-transparent" />
-      <div className="pointer-events-none absolute -bottom-1 z-10 h-20 w-full bg-gradient-to-t from-white to-transparent" />
-      <div className="pointer-events-none absolute -left-1 z-10 h-full w-20 bg-gradient-to-r from-white to-transparent" />
-      <div className="pointer-events-none absolute -right-1 z-10 h-full w-20 bg-gradient-to-l from-white to-transparent" />
+      <div aria-hidden className={clsx(SIDE_OVERLAY_STYLE, "-top-1 h-32 w-full bg-gradient-to-b gradient-mask-b-20")} />
+      <div
+        aria-hidden
+        className={clsx(SIDE_OVERLAY_STYLE, "-bottom-1 h-32 w-full bg-gradient-to-t gradient-mask-t-20")}
+      />
+      <div
+        aria-hidden
+        className={clsx(SIDE_OVERLAY_STYLE, "-left-1 h-full w-32 bg-gradient-to-r gradient-mask-r-20")}
+      />
+      <div
+        aria-hidden
+        className={clsx(SIDE_OVERLAY_STYLE, "-right-1 h-full w-32 bg-gradient-to-l gradient-mask-l-20")}
+      />
 
-      <div className="grid grid-cols-5 grid-rows-1 h-screen w-[150vw] animation-infinite-grid">
+      <div
+        className="grid grid-cols-5 grid-rows-1 h-screen w-[150vw] animation-infinite-grid"
+        aria-label="An infinite scrolling grid with various design related tweets."
+      >
         <div>
           {tweets.map((tweet) => (
             <Tweet key={tweet.id} tweet={tweet} />
@@ -92,32 +106,32 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* <div className="flex flex-col items-center min-h-screen pt-32 pb-10 px-6">
-        <main className="contents">
-          <h1 className="text-4xl font-semibold mb-4 text-center">
-            Twitter Widget for Figma/FigJam
-          </h1>
-          <p className="text-2xl text-gray-600 font-medium text-center mb-16">
-            Embed any tweets in figma
-          </p>
+      <main className="bg-white top-[50%] left-[50%] fixed z-50 -translate-x-[50%] -translate-y-[50%] p-8">
+        <div className={clsx(SIDE_OVERLAY_STYLE, "h-32 w-full top-full left-0 bg-gradient-to-b gradient-mask-b-20")} />
+        <div
+          className={clsx(SIDE_OVERLAY_STYLE, "h-32 w-full bottom-full left-0 bg-gradient-to-t gradient-mask-t-20")}
+        />
+        <div className={clsx(SIDE_OVERLAY_STYLE, "w-32 h-full top-0 left-full bg-gradient-to-r gradient-mask-r-20")} />
+        <div className={clsx(SIDE_OVERLAY_STYLE, "w-32 h-full top-0 right-full bg-gradient-to-l gradient-mask-l-20")} />
 
-          <a
-            className="flex items-center justify-center px-6 py-3 bg-twitter-blue rounded-full text-gray-50 gap-2 font-semibold text-lg w-fit mx-auto cursor-pointer mt-16 mb-20"
-            href="https://www.figma.com/community/widget/1167909952592149014"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <FigmaIcon />
-            Install for free
-          </a>
-        </main>
+        <h1 className="text-4xl font-semibold mb-4 text-center">Twitter Widget for Figma/FigJam</h1>
+        <p className="text-2xl text-gray-600 font-medium text-center mb-16">Embed any tweets in figma</p>
+        <a
+          className="flex items-center justify-center px-6 py-3 bg-twitter-blue rounded-full text-gray-50 gap-2 font-semibold text-lg w-fit mx-auto cursor-pointer mt-16 mb-20"
+          href="https://www.figma.com/community/widget/1167909952592149014"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <FigmaIcon />
+          Install for free
+        </a>
 
         <footer className="flex flex-grow mt-20 mb-10">
           <div className="mt-auto font-medium text-gray-500">
             Crafted with care by <span className="font-semibold text-gray-600">Alexandru</span>
           </div>
         </footer>
-      </div> */}
+      </main>
     </>
   )
 }

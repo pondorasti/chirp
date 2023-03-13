@@ -23,6 +23,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-parallax-tilt": "^1.7.114",
+    "tailwind-gradient-mask-image": "^1.0.0",
     "twitter-api-sdk": "^1.2.1",
     "zod": "^3.21.4"
   },

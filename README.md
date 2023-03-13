@@ -23,11 +23,14 @@
 - [x] analytics
 - [x] twitter card
 - [x] tilt
+- [x] grid
+- [x] edge gradient blur
+- [ ] hero card
 - [ ] mobile
 - [ ] footer
+- [ ] suspense - 100 vitals score?
 - [ ] fix public env var
 - [ ] open graph
-- [ ] turborepo setup?
 
 ## Notes
 
