@@ -18,24 +18,6 @@ const tweetIds = [
   "1189444653059174401",
   "1588943426229522433",
   "1312386219599433729",
-  "1582805523484680192",
-  "1617678030964682753",
-  "1334334544598740994",
-  "826528907381739520",
-  "1504190572336087040",
-  "1189444653059174401",
-  "1588943426229522433",
-  "1312386219599433729",
-  "1582805523484680192",
-  "1617678030964682753",
-  "1334334544598740994",
-  "826528907381739520",
-  "1504190572336087040",
-  "1189444653059174401",
-  "1588943426229522433",
-  "1312386219599433729",
-  "1582805523484680192",
-  "1617678030964682753",
 ]
 
 async function getTweets(): Promise<ITweet[]> {
@@ -54,7 +36,7 @@ async function getTweets(): Promise<ITweet[]> {
 }
 
 const SIDE_OVERLAY_STYLE =
-  "pointer-events-none absolute z-10 from-white to-transparent will-change-transform backdrop-blur-[1px]"
+  "pointer-events-none fixed z-10 from-white to-transparent will-change-transform backdrop-blur-[1px]"
 
 export default async function Home() {
   const tweets = await getTweets()
@@ -76,7 +58,7 @@ export default async function Home() {
       />
 
       <div
-        className="grid grid-cols-5 grid-rows-1 h-screen w-[150vw] animation-infinite-grid"
+        className="grid fixed grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 5xl:grid-cols-6 grid-rows-1 h-screen w-[calc(max(130vw,1260px))] animation-infinite-grid top-[50%] left-[50%]"
         aria-label="An infinite scrolling grid with various design related tweets."
       >
         <div>
@@ -94,19 +76,24 @@ export default async function Home() {
             <Tweet key={tweet.id} tweet={tweet} />
           ))}
         </div>
-        <div>
+        <div className="hidden xl:block">
           {tweets.map((tweet) => (
             <Tweet key={tweet.id} tweet={tweet} />
           ))}
         </div>
-        <div>
+        <div className="hidden 3xl:block">
+          {tweets.map((tweet) => (
+            <Tweet key={tweet.id} tweet={tweet} />
+          ))}
+        </div>
+        <div className="hidden 5xl:block">
           {tweets.map((tweet) => (
             <Tweet key={tweet.id} tweet={tweet} />
           ))}
         </div>
       </div>
 
-      <main className="bg-white top-[50%] left-[50%] fixed z-50 -translate-x-[50%] -translate-y-[50%] p-8">
+      <main className="bg-white top-[50%] left-[50%] fixed z-50 -translate-x-[50%] -translate-y-[50%] p-8 invisible">
         <div className={clsx(SIDE_OVERLAY_STYLE, "h-32 w-full top-full left-0 bg-gradient-to-b gradient-mask-b-20")} />
         <div
           className={clsx(SIDE_OVERLAY_STYLE, "h-32 w-full bottom-full left-0 bg-gradient-to-t gradient-mask-t-20")}

@@ -24,6 +24,10 @@ module.exports = {
         },
       },
     },
+    screens: {
+      "3xl": "1700px",
+      "5xl": "2140px",
+    },
   },
   plugins: [require("tailwind-gradient-mask-image")],
 }

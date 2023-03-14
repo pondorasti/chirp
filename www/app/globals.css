@@ -9,16 +9,15 @@ body {
 
 .animation-infinite-grid {
   animation: infinite-grid 30s linear infinite;
+  /* transform: rotate(-20deg) skewX(20deg) translateZ(0) translateY(-100%) translateX(-20%); */
 }
 
 @keyframes infinite-grid {
   0% {
-    transform: rotatex(20deg) rotate(-20deg) skewX(20deg) translateZ(0) translateY(-100%)
-      translateX(-20%);
+    transform: rotate(-20deg) skewX(20deg) translateZ(0) translateY(-100%) translateX(-20%);
   }
 
   100% {
-    transform: rotatex(20deg) rotate(-20deg) skewX(20deg) translateZ(0) translateY(-20%)
-      translateX(-10%);
+    transform: rotate(-20deg) skewX(20deg) translateZ(0) translateY(-20%) translateX(-20%);
   }
 }

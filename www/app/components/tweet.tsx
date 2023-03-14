@@ -4,8 +4,7 @@ import { ITweet } from "../../pages/api/tweet/[id]"
 import { HeartIcon, ImpressionIcon, ReplyIcon, RetweetIcon, TwitterIcon } from "./icons"
 import { TiltWrapper } from "./tilt"
 
-const TRANSFORM_ANIMATION =
-  "transition-all duration-[600ms] [transition-timing-function:ease] will-change-transform"
+const TRANSFORM_ANIMATION = "transition-all duration-[600ms] [transition-timing-function:ease] will-change-transform"
 const PARALLAX_STYLE = "group-hover:[transform:translateZ(15px)]"
 
 interface IntentGroupProps {
@@ -49,26 +48,17 @@ interface TweetProps {
 }
 
 export const Tweet: React.FC<Readonly<TweetProps>> = ({ tweet }) => (
-  <div
-    className={clsx(
-      "hover:scale-[1.03] mb-5 mr-5 hover:translate-x-1 hover:-translate-y-1",
-      TRANSFORM_ANIMATION
-    )}
-  >
+  <div className={clsx("hover:scale-[1.03] mb-5 mr-5 hover:translate-x-1 hover:-translate-y-1", TRANSFORM_ANIMATION)}>
     <TiltWrapper className="[transform-style:preserve-3d]">
       <div
         className={clsx(
-          "group bg-white p-8 flex flex-col gap-5 rounded-[32px] font-inter max-w-md shadow-md hover:shadow-xl [transform-style:preserve-3d]",
+          "group bg-white p-8 flex flex-col gap-5 rounded-[32px] font-inter min-w-[400px] shadow-md hover:shadow-xl [transform-style:preserve-3d]",
           TRANSFORM_ANIMATION
         )}
       >
         <div className={clsx("flex gap-3 items-center", PARALLAX_STYLE, TRANSFORM_ANIMATION)}>
           {tweet.author.profileImageURI && (
-            <a
-              href={`https://twitter.com/${tweet.author.username}`}
-              target="_blank"
-              rel="noreferrer"
-            >
+            <a href={`https://twitter.com/${tweet.author.username}`} target="_blank" rel="noreferrer">
               <Image
                 src={tweet.author.profileImageURI}
                 alt={`${tweet.author.name}'s profile picture`}
@@ -80,20 +70,10 @@ export const Tweet: React.FC<Readonly<TweetProps>> = ({ tweet }) => (
             </a>
           )}
           <div className="flex flex-col">
-            <a
-              href={`https://twitter.com/${tweet.author.username}`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <h3 className="text-md font-medium leading-5 underline-offset-2 hover:underline">
-                {tweet.author.name}
-              </h3>
+            <a href={`https://twitter.com/${tweet.author.username}`} target="_blank" rel="noreferrer">
+              <h3 className="text-md font-medium leading-5 underline-offset-2 hover:underline">{tweet.author.name}</h3>
             </a>
-            <a
-              href={`https://twitter.com/${tweet.author.username}`}
-              target="_blank"
-              rel="noreferrer"
-            >
+            <a href={`https://twitter.com/${tweet.author.username}`} target="_blank" rel="noreferrer">
               <h4 className="text-twitter-gray pt-0.5 leading-5">@{tweet.author.username}</h4>
             </a>
           </div>
@@ -110,13 +90,7 @@ export const Tweet: React.FC<Readonly<TweetProps>> = ({ tweet }) => (
 
         <p className={clsx("text-lg", PARALLAX_STYLE, TRANSFORM_ANIMATION)}>{tweet.text}</p>
 
-        <div
-          className={clsx(
-            "flex justify-between items-center w-full -m-[7px]",
-            PARALLAX_STYLE,
-            TRANSFORM_ANIMATION
-          )}
-        >
+        <div className={clsx("flex justify-between items-center w-full -m-[7px]", PARALLAX_STYLE, TRANSFORM_ANIMATION)}>
           <IntentGroup
             icon={<ReplyIcon />}
             count={tweet.publicMetrics.replyCount}
