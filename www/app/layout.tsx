@@ -21,7 +21,7 @@ const TITLE = "Chirp"
 const DESCRIPTION = "Embed Tweets in your Figma or FigJam files"
 
 export const metadata: Metadata = {
-  themeColor: "#1DA1F2", // safari doesn't pick up #ffffff
+  themeColor: "#fff",
   category: "technology",
   generator: "Next.js",
   keywords: ["twitter", "tweet", "figma", "figjam", "embed"],
