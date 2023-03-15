@@ -52,7 +52,7 @@ export const Tweet: React.FC<Readonly<TweetProps>> = ({ tweet }) => (
     <TiltWrapper className="[transform-style:preserve-3d]">
       <div
         className={clsx(
-          "group bg-white p-8 flex flex-col gap-5 rounded-[32px] font-inter min-w-[400px] shadow-md hover:shadow-xl [transform-style:preserve-3d]",
+          "group bg-white p-8 flex flex-col gap-5 rounded-[32px] font-inter shadow-md hover:shadow-xl [transform-style:preserve-3d]",
           TRANSFORM_ANIMATION
         )}
       >

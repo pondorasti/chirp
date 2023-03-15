@@ -25,8 +25,10 @@ module.exports = {
       },
     },
     screens: {
-      "3xl": "1700px",
-      "5xl": "2140px",
+      // ideal tweet size = 384px width + 20px padding
+      sm: "640px",
+      xl: "1152px",
+      "3xl": "1536px",
     },
   },
   plugins: [require("tailwind-gradient-mask-image")],
