@@ -85,6 +85,7 @@ export const Tweet: React.FC<Readonly<TweetProps>> = ({ tweet }) => (
             rel="noreferrer"
           >
             <TwitterIcon />
+            <span className="sr-only">tweet link</span>
           </a>
         </div>
 
