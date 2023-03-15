@@ -45,9 +45,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
   const body = schema.safeParse(req.query)
 
-  if (!body.success) {
-    return res.status(400).json({ error: "Invalid request" })
-  }
+  if (!body.success) return res.status(400).json({ error: "Invalid request" })
 
   const response = await twitter.tweets.findTweetsById({
     ids: [body.data.id],
@@ -97,7 +95,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
   // Profile Image Conversation
   const profileImageURI = author.profile_image_url
-    ? `data:image/png;base64,${await imageToBase64(author.profile_image_url)}`
+    ? // By default the API returns a 48x48 image, but we want to get the retina version, 96x96.
+      `data:image/png;base64,${await imageToBase64(author.profile_image_url.replace("_normal", "_x96"))}`
     : undefined
 
   // Media Conversation
@@ -138,7 +137,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         })
 
         uri = `data:image/${fileExtension};base64,${await imageToBase64(url)}`
-        console.log({ variant, variants })
         sourceUrl = variant.url || url
 
         break
@@ -164,8 +162,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     text: formattedText,
     createdAt: tweet.created_at,
     publicMetrics: {
-      retweetCount:
-        (tweet.public_metrics?.retweet_count ?? 0) + (tweet.public_metrics?.quote_count ?? 0),
+      retweetCount: (tweet.public_metrics?.retweet_count ?? 0) + (tweet.public_metrics?.quote_count ?? 0),
       likeCount: tweet.public_metrics?.like_count ?? 0,
       replyCount: tweet.public_metrics?.reply_count ?? 0,
       // @ts-ignore - Twitter API is missing this field
