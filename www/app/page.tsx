@@ -1,5 +1,4 @@
 import clsx from "clsx"
-import { Suspense } from "react"
 import { ITweet } from "../pages/api/tweet/[id]"
 import { FigmaIcon } from "./components/icons"
 import { Tweet } from "./components/tweet"
@@ -59,44 +58,41 @@ export default async function Home() {
         aria-hidden
         className={clsx(SIDE_OVERLAY_STYLE, "-right-1 h-full w-32 bg-gradient-to-l gradient-mask-l-20")}
       />
-
-      <Suspense>
-        <div
-          className="grid fixed grid-cols-3 xl:grid-cols-5 3xl:grid-cols-6 grid-rows-1 h-screen w-[1152px] xl:w-[150vw] 3xl:w-[140vw] animation-infinite-grid -left-[75%] sm:left-0 xl:-left-[25%] 3xl:-left-[15%]"
-          aria-label="An infinite scrolling grid with various design related tweets."
-        >
-          <div>
-            {tweets.map((tweet) => (
-              <Tweet key={tweet.id} tweet={tweet} />
-            ))}
-          </div>
-          <div>
-            {tweets.map((tweet) => (
-              <Tweet key={tweet.id} tweet={tweet} />
-            ))}
-          </div>
-          <div>
-            {tweets.map((tweet) => (
-              <Tweet key={tweet.id} tweet={tweet} />
-            ))}
-          </div>
-          <div className="hidden xl:block">
-            {tweets.map((tweet) => (
-              <Tweet key={tweet.id} tweet={tweet} />
-            ))}
-          </div>
-          <div className="hidden xl:block">
-            {tweets.map((tweet) => (
-              <Tweet key={tweet.id} tweet={tweet} />
-            ))}
-          </div>
-          <div className="hidden 3xl:block">
-            {tweets.map((tweet) => (
-              <Tweet key={tweet.id} tweet={tweet} />
-            ))}
-          </div>
+      <div
+        className="grid fixed grid-cols-3 xl:grid-cols-5 3xl:grid-cols-6 grid-rows-1 h-screen w-[1152px] xl:w-[150vw] 3xl:w-[140vw] animation-infinite-grid -left-[75%] sm:left-0 xl:-left-[25%] 3xl:-left-[15%]"
+        aria-label="An infinite scrolling grid with various design related tweets."
+      >
+        <div>
+          {tweets.map((tweet) => (
+            <Tweet key={tweet.id} tweet={tweet} />
+          ))}
         </div>
-      </Suspense>
+        <div>
+          {tweets.map((tweet) => (
+            <Tweet key={tweet.id} tweet={tweet} />
+          ))}
+        </div>
+        <div>
+          {tweets.map((tweet) => (
+            <Tweet key={tweet.id} tweet={tweet} />
+          ))}
+        </div>
+        <div className="hidden xl:block">
+          {tweets.map((tweet) => (
+            <Tweet key={tweet.id} tweet={tweet} />
+          ))}
+        </div>
+        <div className="hidden xl:block">
+          {tweets.map((tweet) => (
+            <Tweet key={tweet.id} tweet={tweet} />
+          ))}
+        </div>
+        <div className="hidden 3xl:block">
+          {tweets.map((tweet) => (
+            <Tweet key={tweet.id} tweet={tweet} />
+          ))}
+        </div>
+      </div>
 
       <main className="bg-white top-[50%] left-[50%] fixed z-50 -translate-x-[50%] -translate-y-[50%] p-8 invisible">
         <div className={clsx(SIDE_OVERLAY_STYLE, "h-32 w-full top-full left-0 bg-gradient-to-b gradient-mask-b-20")} />
