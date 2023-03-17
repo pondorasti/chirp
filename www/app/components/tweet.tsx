@@ -6,40 +6,26 @@ import { TiltWrapper } from "./tilt"
 
 const TRANSFORM_ANIMATION = "transition-all duration-[600ms] [transition-timing-function:ease] will-change-transform"
 const PARALLAX_STYLE = "group-hover:[transform:translateZ(15px)]"
+const ICON_STYLE = "p-[7px] rounded-full box-content"
 
-interface IntentGroupProps {
-  icon: React.ReactNode
+interface IntentGroupProps extends React.PropsWithChildren {
   count: number
-  label: string
   href: string
   foregroundColor: string
-  backgroundColor: string
 }
 
-const IntentGroup: React.FC<Readonly<IntentGroupProps>> = ({
-  icon,
-  count,
-  label,
-  href,
-  foregroundColor,
-  backgroundColor,
-}) => (
+const IntentGroup: React.FC<Readonly<IntentGroupProps>> = ({ children, count, href, foregroundColor }) => (
   <a
     className={clsx(
-      "flex flex-row gap-1 items-center cursor-pointer group/intent text-twitter-gray fill-twitter-gray",
+      "flex flex-row gap-1 items-center cursor-pointer group/intent text-twitter-gray fill-twitter-gray leading-none text-[13px]",
       foregroundColor
     )}
     href={href}
     target="_blank"
     rel="noreferrer"
   >
-    <div aria-hidden className={clsx("p-[7px] rounded-full", backgroundColor)}>
-      {icon}
-    </div>
-    <span className="leading-none text-[13px]">
-      {count > 1000 ? `${(count / 1000).toFixed(1)}K` : count.toLocaleString()}
-    </span>
-    <span className="sr-only">{label}</span>
+    {children}
+    {count > 1000 ? `${(count / 1000).toFixed(1)}K` : count.toLocaleString()}
   </a>
 )
 
@@ -70,11 +56,25 @@ export const Tweet: React.FC<Readonly<TweetProps>> = ({ tweet }) => (
             </a>
           )}
           <div className="flex flex-col">
-            <a href={`https://twitter.com/${tweet.author.username}`} target="_blank" rel="noreferrer">
-              <h3 className="text-md font-medium leading-5 underline-offset-2 hover:underline">{tweet.author.name}</h3>
+            <a
+              href={`https://twitter.com/${tweet.author.username}`}
+              target="_blank"
+              rel="noreferrer"
+              role="heading"
+              aria-level={3}
+              className="text-md font-medium leading-5 underline-offset-2 hover:underline"
+            >
+              {tweet.author.name}
             </a>
-            <a href={`https://twitter.com/${tweet.author.username}`} target="_blank" rel="noreferrer">
-              <h4 className="text-twitter-gray pt-0.5 leading-5">@{tweet.author.username}</h4>
+            <a
+              href={`https://twitter.com/${tweet.author.username}`}
+              target="_blank"
+              rel="noreferrer"
+              role="heading"
+              aria-level={3}
+              className="text-twitter-gray pt-0.5 leading-5"
+            >
+              @{tweet.author.username}
             </a>
           </div>
 
@@ -83,9 +83,9 @@ export const Tweet: React.FC<Readonly<TweetProps>> = ({ tweet }) => (
             href={`https://twitter.com/${tweet?.author.username}/status/${tweet?.id}`}
             target="_blank"
             rel="noreferrer"
+            aria-label="Tweet link"
           >
             <TwitterIcon />
-            <span className="sr-only">tweet link</span>
           </a>
         </div>
 
@@ -93,38 +93,40 @@ export const Tweet: React.FC<Readonly<TweetProps>> = ({ tweet }) => (
 
         <div className={clsx("flex justify-between items-center w-full -m-[7px]", PARALLAX_STYLE, TRANSFORM_ANIMATION)}>
           <IntentGroup
-            icon={<ReplyIcon />}
             count={tweet.publicMetrics.replyCount}
-            label="replies"
             foregroundColor="hover:text-twitter-blue"
-            backgroundColor="group-hover/intent:bg-twitter-faded-blue"
             href={`https://twitter.com/intent/tweet?in_reply_to=${tweet.id}`}
-          />
+          >
+            <ReplyIcon aria-label="replies" className={clsx("group-hover/intent:bg-twitter-faded-blue", ICON_STYLE)} />
+          </IntentGroup>
           <IntentGroup
-            icon={<HeartIcon />}
             count={tweet.publicMetrics.likeCount}
-            label="likes"
             foregroundColor="hover:text-twitter-red"
-            backgroundColor="group-hover/intent:bg-twitter-faded-red"
             href={`https://twitter.com/intent/like?tweet_id=${tweet.id}`}
-          />
+          >
+            <HeartIcon aria-label="likes" className={clsx("group-hover/intent:bg-twitter-faded-red", ICON_STYLE)} />
+          </IntentGroup>
           <IntentGroup
-            icon={<RetweetIcon />}
             count={tweet.publicMetrics.retweetCount}
-            label="retweets"
             foregroundColor="hover:text-twitter-green"
-            backgroundColor="group-hover/intent:bg-twitter-faded-green"
             href={`https://twitter.com/intent/retweet?tweet_id=${tweet.id}`}
-          />
+          >
+            <RetweetIcon
+              aria-label="retweets"
+              className={clsx("group-hover/intent:bg-twitter-faded-green", ICON_STYLE)}
+            />
+          </IntentGroup>
           {tweet.publicMetrics.impressionCount > 0 && (
             <IntentGroup
-              icon={<ImpressionIcon />}
               count={tweet.publicMetrics.impressionCount}
-              label="impressions"
               foregroundColor="hover:text-twitter-blue"
-              backgroundColor="group-hover/intent:bg-twitter-faded-blue"
               href={`https://twitter.com/${tweet?.author.username}/status/${tweet?.id}`}
-            />
+            >
+              <ImpressionIcon
+                aria-label="impressions"
+                className={clsx("group-hover/intent:bg-twitter-faded-blue", ICON_STYLE)}
+              />
+            </IntentGroup>
           )}
         </div>
       </div>

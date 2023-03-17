@@ -14,12 +14,12 @@ const tweetIds = [
   "1617678030964682753",
   "1334334544598740994",
   "826528907381739520",
-  "826528907381739520",
-  "826528907381739520",
-  "826528907381739520",
-  "826528907381739520",
-  "826528907381739520",
-  "826528907381739520",
+  // "826528907381739520",
+  // "826528907381739520",
+  // "826528907381739520",
+  // "826528907381739520",
+  // "826528907381739520",
+  // "826528907381739520",
 ]
 
 async function getTweets(): Promise<ITweet[]> {
@@ -94,7 +94,7 @@ export default async function Home() {
         </div>
       </div>
 
-      <main className="bg-white top-[50%] left-[50%] fixed z-50 -translate-x-[50%] -translate-y-[50%] p-8 invisible">
+      <main className="bg-white top-[50%] left-[50%] fixed z-50 -translate-x-[50%] -translate-y-[50%] p-8">
         <div className={clsx(SIDE_OVERLAY_STYLE, "h-32 w-full top-full left-0 bg-gradient-to-b gradient-mask-b-20")} />
         <div
           className={clsx(SIDE_OVERLAY_STYLE, "h-32 w-full bottom-full left-0 bg-gradient-to-t gradient-mask-t-20")}
