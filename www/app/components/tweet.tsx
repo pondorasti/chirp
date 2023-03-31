@@ -8,6 +8,31 @@ const TRANSFORM_ANIMATION = "transition-all duration-[600ms] [transition-timing-
 const PARALLAX_STYLE = "group-hover:[transform:translateZ(15px)]"
 const ICON_STYLE = "p-[7px] rounded-full box-content"
 
+interface MediaGroupProps {
+  media: ITweet["media"]
+}
+
+const MediaGroup: React.FC<Readonly<MediaGroupProps>> = ({ media }) => {
+  switch (media.length) {
+    case 0: {
+      return null
+    }
+
+    default: {
+      const item = media[0]
+      return (
+        <Image
+          src={item.uri}
+          alt=""
+          width={item.width}
+          height={item.height}
+          className={clsx("rounded-xl", PARALLAX_STYLE, TRANSFORM_ANIMATION)}
+        />
+      )
+    }
+  }
+}
+
 interface IntentGroupProps extends React.PropsWithChildren {
   count: number
   href: string
@@ -90,6 +115,8 @@ export const Tweet: React.FC<Readonly<TweetProps>> = ({ tweet }) => (
         </div>
 
         <p className={clsx("text-lg", PARALLAX_STYLE, TRANSFORM_ANIMATION)}>{tweet.text}</p>
+
+        <MediaGroup media={tweet.media} />
 
         <div className={clsx("flex justify-between items-center w-full -m-[7px]", PARALLAX_STYLE, TRANSFORM_ANIMATION)}>
           <IntentGroup

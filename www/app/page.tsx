@@ -3,23 +3,38 @@ import { ITweet } from "../pages/api/tweet/[id]"
 import { FigmaIcon } from "./components/icons"
 import { Tweet } from "./components/tweet"
 
+// "1504190572336087040",
+//   "1189444653059174401",
+//   "1588943426229522433",
+//   "1312386219599433729",
+//   "1582805523484680192",
+//   "1334334544598740994",
+//   "826528907381739520",
+
 const tweetIds = [
-  "1334334544598740994",
-  "826528907381739520",
-  "1504190572336087040",
-  "1189444653059174401",
-  "1588943426229522433",
-  "1312386219599433729",
-  "1582805523484680192",
+  "1617478463916748801",
+  "1587918615591854080",
+  "1616842188259819523",
+  "1640675018043432961",
+  "1619368910318632961",
+  "1593056767126405120",
+  "1550494541874020353",
+  "1582440503374934016",
+  "1590914253254701057",
+  "1617942815409065984",
+  "1640745044645748736",
+  "1619833149898502144",
+  "1619793057423196160",
+  "1615846054024331264",
+  "1606386119389679629",
+  "1599462078569324545",
   "1617678030964682753",
-  "1334334544598740994",
-  "826528907381739520",
-  // "826528907381739520",
-  // "826528907381739520",
-  // "826528907381739520",
-  // "826528907381739520",
-  // "826528907381739520",
-  // "826528907381739520",
+  "1602341013132963840",
+  "1615363412107886592",
+  "1525522007063928833",
+  "1618195529284071430",
+  "1605231589717266432",
+  "1638136335880921090",
 ]
 
 async function getTweets(): Promise<ITweet[]> {
@@ -34,7 +49,8 @@ async function getTweets(): Promise<ITweet[]> {
     })
   )
 
-  return tweets
+  // shuffle mechanism 🙈
+  return tweets.sort(() => Math.random() - 0.5)
 }
 
 const SIDE_OVERLAY_STYLE =
@@ -42,6 +58,10 @@ const SIDE_OVERLAY_STYLE =
 
 export default async function Home() {
   const tweets = await getTweets()
+  const buckets = Array.from({ length: 6 }, () => [] as ITweet[])
+  tweets.forEach((tweet, index) => {
+    buckets[index % 6].push(tweet)
+  })
 
   return (
     <>
@@ -63,37 +83,37 @@ export default async function Home() {
         aria-label="An infinite scrolling grid with various design related tweets."
       >
         <div>
-          {tweets.map((tweet) => (
+          {buckets[0].map((tweet) => (
             <Tweet key={tweet.id} tweet={tweet} />
           ))}
         </div>
         <div>
-          {tweets.map((tweet) => (
+          {buckets[1].map((tweet) => (
             <Tweet key={tweet.id} tweet={tweet} />
           ))}
         </div>
         <div>
-          {tweets.map((tweet) => (
+          {buckets[2].map((tweet) => (
             <Tweet key={tweet.id} tweet={tweet} />
           ))}
         </div>
         <div className="hidden xl:block">
-          {tweets.map((tweet) => (
+          {buckets[3].map((tweet) => (
             <Tweet key={tweet.id} tweet={tweet} />
           ))}
         </div>
         <div className="hidden xl:block">
-          {tweets.map((tweet) => (
+          {buckets[4].map((tweet) => (
             <Tweet key={tweet.id} tweet={tweet} />
           ))}
         </div>
         <div className="hidden 3xl:block">
-          {tweets.map((tweet) => (
+          {buckets[5].map((tweet) => (
             <Tweet key={tweet.id} tweet={tweet} />
           ))}
         </div>
       </div>
-
+      {/* 
       <main className="bg-white top-[50%] left-[50%] fixed z-50 -translate-x-[50%] -translate-y-[50%] p-8">
         <div className={clsx(SIDE_OVERLAY_STYLE, "h-32 w-full top-full left-0 bg-gradient-to-b gradient-mask-b-20")} />
         <div
@@ -119,7 +139,7 @@ export default async function Home() {
             Crafted with care by <span className="font-semibold text-gray-600">Alexandru</span>
           </div>
         </footer>
-      </main>
+      </main> */}
     </>
   )
 }
