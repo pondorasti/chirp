@@ -46,14 +46,12 @@ const shuffleArray = <T,>(array: Array<T>) => {
   }
 }
 
-shuffleArray(tweetIds)
-
 async function getTweets(): Promise<ITweet[]> {
   const ids = tweetIds
   const tweets = await Promise.all(
     ids.map(async (id) => {
       const res = await fetch("https://chirp.alexandru.so/api/tweet/" + id, {
-        next: { revalidate: 60 },
+        next: { revalidate: 31536000 },
       })
       const data = await res.json()
       return data
@@ -68,9 +66,10 @@ async function getTweets(): Promise<ITweet[]> {
 const SIDE_OVERLAY_STYLE =
   "pointer-events-none fixed z-10 from-white to-transparent will-change-transform backdrop-blur-[1px]"
 
-export default function Home() {
-  const buckets = Array.from({ length: 6 }, () => [] as string[])
-  tweetIds.forEach((tweet, index) => {
+export default async function Home() {
+  const tweets = await getTweets()
+  const buckets = Array.from({ length: 6 }, () => [] as ITweet[])
+  tweets.forEach((tweet, index) => {
     buckets[index % 6].push(tweet)
   })
 
@@ -95,38 +94,32 @@ export default function Home() {
       >
         <div>
           {buckets[0].map((tweet) => (
-            // @ts-expect-error Async Server Component
-            <Tweet key={tweet} tweetId={tweet} />
+            <Tweet key={tweet.id} tweet={tweet} />
           ))}
         </div>
         <div>
           {buckets[1].map((tweet) => (
-            // @ts-expect-error Async Server Component
-            <Tweet key={tweet} tweetId={tweet} />
+            <Tweet key={tweet.id} tweet={tweet} />
           ))}
         </div>
         <div>
           {buckets[2].map((tweet) => (
-            // @ts-expect-error Async Server Component
-            <Tweet key={tweet} tweetId={tweet} />
+            <Tweet key={tweet.id} tweet={tweet} />
           ))}
         </div>
         <div className="hidden xl:block">
           {buckets[3].map((tweet) => (
-            // @ts-expect-error Async Server Component
-            <Tweet key={tweet} tweetId={tweet} />
+            <Tweet key={tweet.id} tweet={tweet} />
           ))}
         </div>
         <div className="hidden xl:block">
           {buckets[4].map((tweet) => (
-            // @ts-expect-error Async Server Component
-            <Tweet key={tweet} tweetId={tweet} />
+            <Tweet key={tweet.id} tweet={tweet} />
           ))}
         </div>
         <div className="hidden 3xl:block">
           {buckets[5].map((tweet) => (
-            // @ts-expect-error Async Server Component
-            <Tweet key={tweet} tweetId={tweet} />
+            <Tweet key={tweet.id} tweet={tweet} />
           ))}
         </div>
       </div>

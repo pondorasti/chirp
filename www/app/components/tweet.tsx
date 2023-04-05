@@ -22,7 +22,7 @@ const MediaGroup: React.FC<Readonly<MediaGroupProps>> = ({ media }) => {
       const item = media[0]
       return (
         <Image
-          src={item.uri}
+          src={item.preview_image_url ?? item.url}
           alt=""
           width={item.width}
           height={item.height}
@@ -54,21 +54,11 @@ const IntentGroup: React.FC<Readonly<IntentGroupProps>> = ({ children, count, hr
   </a>
 )
 
-async function getTweet(id: string): Promise<ITweet> {
-  const res = await fetch("https://chirp.alexandru.so/api/tweet/" + id, {
-    next: { revalidate: 31536000 },
-  })
-  const tweet = (await res.json()) as ITweet
-  return tweet
-}
-
 interface TweetProps {
-  tweetId: string
+  tweet: ITweet
 }
 
-export const Tweet = async ({ tweetId }: Readonly<TweetProps>) => {
-  const tweet = await getTweet(tweetId)
-
+export const Tweet: React.FC<Readonly<TweetProps>> = ({ tweet }) => {
   return (
     <div className={clsx("hover:scale-[1.03] mb-5 mr-5 hover:translate-x-1 hover:-translate-y-1", TRANSFORM_ANIMATION)}>
       <TiltWrapper className="[transform-style:preserve-3d]">

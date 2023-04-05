@@ -6,6 +6,16 @@ const nextConfig = withAxiom({
     appDir: true,
     fontLoaders: [{ loader: "@next/font/google", options: { subsets: ["latin"] } }],
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "pbs.twimg.com",
+        port: "",
+        pathname: "/**",
+      },
+    ],
+  },
 })
 
 module.exports = nextConfig

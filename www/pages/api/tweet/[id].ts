@@ -31,6 +31,7 @@ export type ITweet = {
     altText?: string
     type: "photo" | "video"
     uri: string
+    preview_image_url?: string // Only for `video` type
     url: string
   }[]
 }
@@ -108,6 +109,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
     let uri: string
     let sourceUrl: string
+    let previewImageUrl: string | undefined
 
     switch (mediaItem.type) {
       case "photo": {
@@ -138,6 +140,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
         uri = `data:image/${fileExtension};base64,${await imageToBase64(url)}`
         sourceUrl = variant.url || url
+        previewImageUrl = url
 
         break
       }
@@ -154,6 +157,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       type: mediaItem.type,
       uri,
       url: sourceUrl,
+      preview_image_url: previewImageUrl,
     })
   }
 
