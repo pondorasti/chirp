@@ -37,6 +37,17 @@ const tweetIds = [
   "1638136335880921090",
 ]
 
+const shuffleArray = <T,>(array: Array<T>) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    const temp = array[i]
+    array[i] = array[j]
+    array[j] = temp
+  }
+}
+
+shuffleArray(tweetIds)
+
 async function getTweets(): Promise<ITweet[]> {
   const ids = tweetIds
   const tweets = await Promise.all(
@@ -49,17 +60,17 @@ async function getTweets(): Promise<ITweet[]> {
     })
   )
 
-  // shuffle mechanism 🙈
-  return tweets.sort(() => Math.random() - 0.5)
+  shuffleArray(tweets)
+
+  return tweets
 }
 
 const SIDE_OVERLAY_STYLE =
   "pointer-events-none fixed z-10 from-white to-transparent will-change-transform backdrop-blur-[1px]"
 
-export default async function Home() {
-  const tweets = await getTweets()
-  const buckets = Array.from({ length: 6 }, () => [] as ITweet[])
-  tweets.forEach((tweet, index) => {
+export default function Home() {
+  const buckets = Array.from({ length: 6 }, () => [] as string[])
+  tweetIds.forEach((tweet, index) => {
     buckets[index % 6].push(tweet)
   })
 
@@ -84,32 +95,38 @@ export default async function Home() {
       >
         <div>
           {buckets[0].map((tweet) => (
-            <Tweet key={tweet.id} tweet={tweet} />
+            // @ts-expect-error Async Server Component
+            <Tweet key={tweet} tweetId={tweet} />
           ))}
         </div>
         <div>
           {buckets[1].map((tweet) => (
-            <Tweet key={tweet.id} tweet={tweet} />
+            // @ts-expect-error Async Server Component
+            <Tweet key={tweet} tweetId={tweet} />
           ))}
         </div>
         <div>
           {buckets[2].map((tweet) => (
-            <Tweet key={tweet.id} tweet={tweet} />
+            // @ts-expect-error Async Server Component
+            <Tweet key={tweet} tweetId={tweet} />
           ))}
         </div>
         <div className="hidden xl:block">
           {buckets[3].map((tweet) => (
-            <Tweet key={tweet.id} tweet={tweet} />
+            // @ts-expect-error Async Server Component
+            <Tweet key={tweet} tweetId={tweet} />
           ))}
         </div>
         <div className="hidden xl:block">
           {buckets[4].map((tweet) => (
-            <Tweet key={tweet.id} tweet={tweet} />
+            // @ts-expect-error Async Server Component
+            <Tweet key={tweet} tweetId={tweet} />
           ))}
         </div>
         <div className="hidden 3xl:block">
           {buckets[5].map((tweet) => (
-            <Tweet key={tweet.id} tweet={tweet} />
+            // @ts-expect-error Async Server Component
+            <Tweet key={tweet} tweetId={tweet} />
           ))}
         </div>
       </div>
