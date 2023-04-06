@@ -21,13 +21,23 @@ const MediaGroup: React.FC<Readonly<MediaGroupProps>> = ({ media }) => {
     default: {
       const item = media[0]
       return (
-        <Image
-          src={item.preview_image_url ?? item.url}
-          alt=""
-          width={item.width}
-          height={item.height}
-          className={clsx("rounded-xl", PARALLAX_STYLE, TRANSFORM_ANIMATION)}
-        />
+        <div
+          className={clsx(
+            "relative h-full w-full rounded-xl overflow-hidden border border-twitter-gray-border",
+            PARALLAX_STYLE,
+            TRANSFORM_ANIMATION
+          )}
+          style={{ aspectRatio: item.width / item.height }}
+        >
+          <Image
+            src={item.preview_image_url ?? item.url}
+            alt=""
+            fill
+            placeholder="blur"
+            blurDataURL="data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWEREiMxUf/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+            className={clsx("object-contain", PARALLAX_STYLE, TRANSFORM_ANIMATION)}
+          />
+        </div>
       )
     }
   }

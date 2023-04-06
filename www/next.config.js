@@ -7,6 +7,7 @@ const nextConfig = withAxiom({
     fontLoaders: [{ loader: "@next/font/google", options: { subsets: ["latin"] } }],
   },
   images: {
+    minimumCacheTTL: 31536000, // 1 year ~infinite cache
     remotePatterns: [
       {
         protocol: "https",

@@ -19,6 +19,7 @@ module.exports = {
         "twitter-green": "#00BA7C",
         "twitter-faded-green": "#DEF1EB",
         "twitter-gray": "#536471",
+        "twitter-gray-border": "#CFD9DE",
         gray: {
           ...colors.neutral,
         },
