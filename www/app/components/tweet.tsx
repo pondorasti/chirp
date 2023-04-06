@@ -30,6 +30,7 @@ const MediaGroup: React.FC<Readonly<MediaGroupProps>> = ({ media }) => {
           style={{ aspectRatio: item.width / item.height }}
         >
           <Image
+            priority
             src={item.preview_image_url ?? item.url}
             alt=""
             fill
