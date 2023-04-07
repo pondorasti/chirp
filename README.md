@@ -25,10 +25,11 @@
 - [x] tilt
 - [x] grid
 - [x] edge gradient blur
+- [ ] blur hash
+- [ ] grid sizing + mobile
+- [ ] tweet intents hover animation
 - [ ] hero card
-- [ ] mobile
 - [ ] footer
-- [ ] suspense - 100 vitals score?
 - [x] fix public env var
 - [ ] open graph
 - [x] favicon 

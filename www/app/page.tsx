@@ -89,7 +89,7 @@ export default async function Home() {
         className={clsx(SIDE_OVERLAY_STYLE, "-right-1 h-full w-32 bg-gradient-to-l gradient-mask-l-20")}
       />
       <div
-        className="grid fixed grid-cols-3 xl:grid-cols-5 3xl:grid-cols-6 grid-rows-1 h-screen w-[1152px] xl:w-[150vw] 3xl:w-[140vw] animation-infinite-grid -left-[75%] sm:left-0 xl:-left-[25%] 3xl:-left-[15%]"
+        className="grid fixed h-screen animation-infinite-grid -left-[202px] w-[808px] sm:w-[1212px] md:w-[1616px] lg:w-[2020px] grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
         aria-label="An infinite scrolling grid with various design related tweets."
       >
         <div>
@@ -107,17 +107,17 @@ export default async function Home() {
             <Tweet key={tweet.id} tweet={tweet} />
           ))}
         </div>
-        <div className="hidden xl:block">
+        <div className="hidden sm:block">
           {buckets[3].map((tweet) => (
             <Tweet key={tweet.id} tweet={tweet} />
           ))}
         </div>
-        <div className="hidden xl:block">
+        <div className="hidden md:block">
           {buckets[4].map((tweet) => (
             <Tweet key={tweet.id} tweet={tweet} />
           ))}
         </div>
-        <div className="hidden 3xl:block">
+        <div className="hidden lg:block">
           {buckets[5].map((tweet) => (
             <Tweet key={tweet.id} tweet={tweet} />
           ))}

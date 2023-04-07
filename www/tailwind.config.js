@@ -25,12 +25,12 @@ module.exports = {
         },
       },
     },
-    screens: {
-      // ideal tweet size = 384px width + 20px padding
-      sm: "640px",
-      xl: "1152px",
-      "3xl": "1536px",
-    },
+    // screens: {
+    //   // ideal tweet size = 384px width + 20px padding
+    //   // sm: "640px",
+    //   // xl: "1152px",
+    //   // "3xl": "1536px",
+    // },
   },
   plugins: [require("tailwind-gradient-mask-image")],
 }

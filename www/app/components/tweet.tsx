@@ -20,25 +20,21 @@ const MediaGroup: React.FC<Readonly<MediaGroupProps>> = ({ media }) => {
 
     default: {
       const item = media[0]
+      const aspectRatio = item.width / item.height
+      const width = 318
+      const height = width / aspectRatio
+
       return (
-        <div
-          className={clsx(
-            "relative h-full w-full rounded-xl overflow-hidden border border-twitter-gray-border",
-            PARALLAX_STYLE,
-            TRANSFORM_ANIMATION
-          )}
-          style={{ aspectRatio: item.width / item.height }}
-        >
-          <Image
-            priority
-            src={item.preview_image_url ?? item.url}
-            alt=""
-            fill
-            placeholder="blur"
-            blurDataURL="data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWEREiMxUf/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
-            className={clsx("object-contain", PARALLAX_STYLE, TRANSFORM_ANIMATION)}
-          />
-        </div>
+        <Image
+          priority
+          src={item.preview_image_url ?? item.url}
+          alt=""
+          width={width}
+          height={height}
+          placeholder="blur"
+          blurDataURL="data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWEREiMxUf/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+          className={clsx("rounded-xl border border-twitter-gray-border", PARALLAX_STYLE, TRANSFORM_ANIMATION)}
+        />
       )
     }
   }
@@ -71,11 +67,16 @@ interface TweetProps {
 
 export const Tweet: React.FC<Readonly<TweetProps>> = ({ tweet }) => {
   return (
-    <div className={clsx("hover:scale-[1.03] mb-5 mr-5 hover:translate-x-1 hover:-translate-y-1", TRANSFORM_ANIMATION)}>
-      <TiltWrapper className="[transform-style:preserve-3d]">
+    <div
+      className={clsx(
+        "hover:scale-[1.03] mb-5 mr-5 hover:translate-x-1 hover:-translate-y-1 select-none",
+        TRANSFORM_ANIMATION
+      )}
+    >
+      <TiltWrapper className="[transform-style:preserve-3d] w-[--tweet-width]">
         <div
           className={clsx(
-            "group bg-white p-8 flex flex-col gap-5 rounded-[32px] font-inter shadow-md hover:shadow-xl [transform-style:preserve-3d]",
+            "group bg-white p-8 flex flex-col gap-5 rounded-[32px] font-inter shadow-md hover:shadow-xl [transform-style:preserve-3d] w-[--tweet-width]",
             TRANSFORM_ANIMATION
           )}
         >
