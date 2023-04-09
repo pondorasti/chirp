@@ -3,6 +3,7 @@ import Image from "next/image"
 import { ITweet } from "../../pages/api/tweet/[id]"
 import { HeartIcon, ImpressionIcon, ReplyIcon, RetweetIcon, TwitterIcon } from "./icons"
 import { TiltWrapper } from "./tilt"
+import { getPlaiceholder } from "plaiceholder"
 
 const TRANSFORM_ANIMATION = "transition-all duration-[600ms] [transition-timing-function:ease] will-change-transform"
 const PARALLAX_STYLE = "group-hover:[transform:translateZ(15px)]"
@@ -12,7 +13,7 @@ interface MediaGroupProps {
   media: ITweet["media"]
 }
 
-const MediaGroup: React.FC<Readonly<MediaGroupProps>> = ({ media }) => {
+const MediaGroup = async ({ media }: Readonly<MediaGroupProps>) => {
   switch (media.length) {
     case 0: {
       return null
@@ -23,16 +24,19 @@ const MediaGroup: React.FC<Readonly<MediaGroupProps>> = ({ media }) => {
       const aspectRatio = item.width / item.height
       const width = 318
       const height = width / aspectRatio
+      const imageUrl = item.preview_image_url ?? item.url
+
+      const { base64 } = await getPlaiceholder(imageUrl, { size: 10 })
 
       return (
         <Image
           priority
-          src={item.preview_image_url ?? item.url}
+          src={imageUrl}
           alt=""
           width={width}
           height={height}
           placeholder="blur"
-          blurDataURL="data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWEREiMxUf/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+          blurDataURL={base64}
           className={clsx("rounded-xl border border-twitter-gray-border", PARALLAX_STYLE, TRANSFORM_ANIMATION)}
         />
       )
@@ -129,6 +133,7 @@ export const Tweet: React.FC<Readonly<TweetProps>> = ({ tweet }) => {
 
           <p className={clsx("text-lg", PARALLAX_STYLE, TRANSFORM_ANIMATION)}>{tweet.text}</p>
 
+          {/* @ts-expect-error Async Server Component */}
           <MediaGroup media={tweet.media} />
 
           <div
