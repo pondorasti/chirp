@@ -4,7 +4,6 @@ const { withAxiom } = require("next-axiom")
 const nextConfig = withAxiom({
   experimental: {
     appDir: true,
-    fontLoaders: [{ loader: "@next/font/google", options: { subsets: ["latin"] } }],
   },
   images: {
     minimumCacheTTL: 31536000, // 1 year ~infinite cache

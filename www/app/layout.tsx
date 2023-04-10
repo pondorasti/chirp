@@ -1,5 +1,5 @@
-import { Inter } from "@next/font/google"
-import localFont from "@next/font/local"
+import { Inter } from "next/font/google"
+import localFont from "next/font/local"
 import clsx from "clsx"
 import { Metadata } from "next"
 import { AnalyticsWrapper } from "./components/analytics"
@@ -13,6 +13,7 @@ const satoshi = localFont({
 })
 
 const inter = Inter({
+  subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
 })
