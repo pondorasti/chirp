@@ -1,5 +1,6 @@
 # Chirp
 
+lil widget for embe
 ## TODO
 ### widget
 
@@ -25,14 +26,13 @@
 - [x] tilt
 - [x] grid
 - [x] edge gradient blur
-- [ ] blur hash
-- [ ] grid sizing + mobile
-- [ ] tweet intents hover animation
-- [ ] hero card
-- [ ] footer
+- [x] blur hash
 - [x] fix public env var
-- [ ] open graph
 - [x] favicon 
+- [x] tweet intents hover animation
+- [x] hero card
+- [ ] grid sizing + mobile
+- [ ] open graph
 
 ## Notes
 

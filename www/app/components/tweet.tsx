@@ -5,9 +5,11 @@ import { HeartIcon, ImpressionIcon, ReplyIcon, RetweetIcon, TwitterIcon } from "
 import { TiltWrapper } from "./tilt"
 import { getPlaiceholder } from "plaiceholder"
 
-const TRANSFORM_ANIMATION = "transition-all duration-[600ms] [transition-timing-function:ease] will-change-transform"
-const PARALLAX_STYLE = "group-hover:[transform:translateZ(15px)]"
+export const TRANSFORM_ANIMATION =
+  "transition-all duration-[600ms] [transition-timing-function:ease] will-change-transform"
+export const PARALLAX_STYLE = "group-hover:[transform:translateZ(15px)]"
 const ICON_STYLE = "p-[7px] rounded-full box-content"
+const INTENT_TRANSITION = "!transition-all !duration-200 ease-in-out"
 
 interface MediaGroupProps {
   media: ITweet["media"]
@@ -146,7 +148,7 @@ export const Tweet: React.FC<Readonly<TweetProps>> = ({ tweet }) => {
             >
               <ReplyIcon
                 aria-label="replies"
-                className={clsx("group-hover/intent:bg-twitter-faded-blue", ICON_STYLE)}
+                className={clsx("group-hover/intent:bg-twitter-faded-blue", ICON_STYLE, INTENT_TRANSITION)}
               />
             </IntentGroup>
             <IntentGroup
@@ -154,7 +156,10 @@ export const Tweet: React.FC<Readonly<TweetProps>> = ({ tweet }) => {
               foregroundColor="hover:text-twitter-red"
               href={`https://twitter.com/intent/like?tweet_id=${tweet.id}`}
             >
-              <HeartIcon aria-label="likes" className={clsx("group-hover/intent:bg-twitter-faded-red", ICON_STYLE)} />
+              <HeartIcon
+                aria-label="likes"
+                className={clsx("group-hover/intent:bg-twitter-faded-red", ICON_STYLE, INTENT_TRANSITION)}
+              />
             </IntentGroup>
             <IntentGroup
               count={tweet.publicMetrics.retweetCount}
@@ -163,7 +168,7 @@ export const Tweet: React.FC<Readonly<TweetProps>> = ({ tweet }) => {
             >
               <RetweetIcon
                 aria-label="retweets"
-                className={clsx("group-hover/intent:bg-twitter-faded-green", ICON_STYLE)}
+                className={clsx("group-hover/intent:bg-twitter-faded-green", ICON_STYLE, INTENT_TRANSITION)}
               />
             </IntentGroup>
             {tweet.publicMetrics.impressionCount > 0 && (
@@ -174,7 +179,7 @@ export const Tweet: React.FC<Readonly<TweetProps>> = ({ tweet }) => {
               >
                 <ImpressionIcon
                   aria-label="impressions"
-                  className={clsx("group-hover/intent:bg-twitter-faded-blue", ICON_STYLE)}
+                  className={clsx("group-hover/intent:bg-twitter-faded-blue", ICON_STYLE, INTENT_TRANSITION)}
                 />
               </IntentGroup>
             )}
