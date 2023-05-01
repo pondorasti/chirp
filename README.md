@@ -1,38 +1,8 @@
-# Chirp
+# 🐦 chirp
 
-lil widget for embe
-## TODO
-### widget
-
-- [x] intents (retweet, like, comment)
-- [x] tweet url unfurl
-- [x] layout pixel peeping
-- [x] image cards
-- [x] gif/video cards
-- [x] icon -> https://icon.ray.so/
-- [x] twitter logo
-- [x] bottom padding negative offset
-- [x] new intent group
-- [x] property menu
-- [x] description
-- [x] banner
-- [x] img border
-
-### www
-- [x] custom font
-- [x] domain
-- [x] analytics
-- [x] twitter card
-- [x] tilt
-- [x] grid
-- [x] edge gradient blur
-- [x] blur hash
-- [x] fix public env var
-- [x] favicon 
-- [x] tweet intents hover animation
-- [x] hero card
-- [x] open graph
-- [ ] grid sizing + mobile
+<p align="center">
+  <a href="https://chirp.alexandru.so/"><img src="./www/app/opengraph-image.png" style="max-width: 100%;"></a>
+</p>
 
 ## Notes
 
