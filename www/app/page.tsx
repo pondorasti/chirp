@@ -14,9 +14,9 @@ export const runtime = "experimental-edge"
 
 export default async function Home() {
   const tweets = shuffleArray(TWEETS)
-  const buckets = Array.from({ length: 6 }, () => [] as ITweet[])
+  const buckets = Array.from({ length: 5 }, () => [] as ITweet[])
   tweets.forEach((tweet, index) => {
-    buckets[index % 6].push(tweet)
+    buckets[index % 5].push(tweet)
   })
 
   return (
@@ -35,7 +35,7 @@ export default async function Home() {
         className={clsx(SIDE_OVERLAY_STYLE, "-right-1 h-full w-32 bg-gradient-to-l gradient-mask-l-20")}
       />
       <div
-        className="grid fixed h-screen animation-infinite-grid -left-[202px] w-[808px] sm:w-[1212px] md:w-[1616px] lg:w-[2020px] grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
+        className="grid fixed h-screen animation-infinite-grid left-[calc(50%+101px)] sm:left-[calc(50%+202px)] w-[808px] sm:w-[1212px] md:w-[1616px] lg:w-[2020px] grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
         aria-label="An infinite scrolling grid with various design related tweets."
       >
         <div>
@@ -48,23 +48,18 @@ export default async function Home() {
             <Tweet key={tweet.id} tweet={tweet} />
           ))}
         </div>
-        <div>
+        <div className="hidden sm:block">
           {buckets[2].map((tweet) => (
             <Tweet key={tweet.id} tweet={tweet} />
           ))}
         </div>
-        <div className="hidden sm:block">
+        <div className="hidden md:block">
           {buckets[3].map((tweet) => (
             <Tweet key={tweet.id} tweet={tweet} />
           ))}
         </div>
-        <div className="hidden md:block">
-          {buckets[4].map((tweet) => (
-            <Tweet key={tweet.id} tweet={tweet} />
-          ))}
-        </div>
         <div className="hidden lg:block">
-          {buckets[5].map((tweet) => (
+          {buckets[4].map((tweet) => (
             <Tweet key={tweet.id} tweet={tweet} />
           ))}
         </div>

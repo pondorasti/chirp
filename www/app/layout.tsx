@@ -19,7 +19,7 @@ const inter = Inter({
 })
 
 const TITLE = "Chirp"
-const DESCRIPTION = "Embed Tweets in your Figma or FigJam files"
+const DESCRIPTION = "Embed your favorite tweets in Figma or FigJam files"
 
 export const metadata: Metadata = {
   category: "technology",
