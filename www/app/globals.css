@@ -11,12 +11,12 @@ body {
 }
 
 .animation-infinite-grid {
-  animation: infinite-grid 30s linear infinite;
+  animation: infinite-grid 60s linear infinite;
 }
 
 @keyframes infinite-grid {
   0% {
-    transform: rotate(-20deg) skewX(20deg) translateZ(0) translateY(-50%) translateX(0%);
+    transform: rotate(-20deg) skewX(20deg) translateZ(0) translateY(-100%) translateX(0%);
   }
 
   100% {

@@ -1,72 +1,19 @@
 import clsx from "clsx"
+import { shuffleArray } from "../lib/utils"
 import { ITweet } from "../pages/api/tweet/[id]"
 import { FigmaIcon } from "./components/icons"
-import { Tweet, TRANSFORM_ANIMATION, PARALLAX_STYLE } from "./components/tweet"
 import { TiltWrapper } from "./components/tilt"
 import { Transition } from "./components/transition"
-
-const tweetIds = [
-  "1617478463916748801",
-  "1587918615591854080",
-  "1616842188259819523",
-  "1640675018043432961",
-  "1619368910318632961",
-  "1593056767126405120",
-  "1550494541874020353",
-  "1582440503374934016",
-  "1590914253254701057",
-  "1617942815409065984",
-  "1640745044645748736",
-  "1619833149898502144",
-  "1619793057423196160",
-  "1615846054024331264",
-  "1606386119389679629",
-  "1599462078569324545",
-  "1617678030964682753",
-  "1602341013132963840",
-  "1615363412107886592",
-  "1525522007063928833",
-  "1618195529284071430",
-  "1605231589717266432",
-  "1638136335880921090",
-]
-
-const shuffleArray = <T,>(array: Array<T>) => {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    const temp = array[i]
-    array[i] = array[j]
-    array[j] = temp
-  }
-}
-
-async function getTweets(): Promise<ITweet[]> {
-  const ids = tweetIds
-  try {
-    const tweets = await Promise.all(
-      ids.map(async (id) => {
-        const res = await fetch("https://chirp.alexandru.so/api/tweet/" + id, {
-          next: { revalidate: 31536000 },
-        })
-        const data = await res.json()
-        return data
-      })
-    )
-
-    shuffleArray(tweets)
-
-    return tweets
-  } catch (error) {
-    console.error(error)
-    return []
-  }
-}
+import { PARALLAX_STYLE, TRANSFORM_ANIMATION, Tweet } from "./components/tweet"
+import { TWEETS } from "./data"
 
 const SIDE_OVERLAY_STYLE =
   "pointer-events-none fixed z-10 from-white to-transparent will-change-transform backdrop-blur-[1px]"
 
+export const runtime = "experimental-edge"
+
 export default async function Home() {
-  const tweets = await getTweets()
+  const tweets = shuffleArray(TWEETS)
   const buckets = Array.from({ length: 6 }, () => [] as ITweet[])
   tweets.forEach((tweet, index) => {
     buckets[index % 6].push(tweet)
@@ -136,7 +83,7 @@ export default async function Home() {
           <TiltWrapper className="[transform-style:preserve-3d]">
             <div
               className={clsx(
-                "group bg-white/95 p-10 border border-black/5 bg-clip-padding rounded-[32px] font-inter shadow-xl hover:shadow-2xl [transform-style:preserve-3d]",
+                "group bg-white/[0.98] p-10 border border-black/5 bg-clip-padding rounded-[32px] font-inter shadow-xl hover:shadow-2xl [transform-style:preserve-3d]",
                 TRANSFORM_ANIMATION
               )}
             >

@@ -22,25 +22,23 @@ const TITLE = "Chirp"
 const DESCRIPTION = "Embed Tweets in your Figma or FigJam files"
 
 export const metadata: Metadata = {
-  themeColor: "#fff",
   category: "technology",
   generator: "Next.js",
   keywords: ["twitter", "tweet", "figma", "figjam", "embed"],
+  authors: [
+    {
+      name: "pondorasti",
+      url: "https://alexandru.so",
+    },
+  ],
+  creator: "pondorasti",
   title: TITLE,
   description: DESCRIPTION,
   openGraph: {
+    siteName: TITLE,
     title: TITLE,
     description: DESCRIPTION,
     url: "https://chirp.alexandru.so",
-    siteName: TITLE,
-    // images: [ todo
-    //   {
-    //     url: "https://nextjs.org/og-alt.png",
-    //     width: 1800,
-    //     height: 1600,
-    //     alt: "My custom alt",
-    //   },
-    // ],
     locale: "en-US",
     type: "website",
   },
@@ -48,9 +46,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: TITLE,
     description: DESCRIPTION,
-    site: "@pondorasti",
     creator: "@pondorasti",
-    // images: ["https://nextjs.org/og.png"], // todo
   },
   icons: {
     icon: "/favicon.ico",
@@ -59,12 +55,19 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
+  ],
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={clsx(satoshi.variable, inter.variable)}>
-      <body className="bg-gray-100 antialiased overscroll-none h-screen w-screen relative overflow-hidden">
+      <body
+        className="bg-gray-100 antialiased overscroll-none h-screen w-screen relative overflow-hidden"
+        suppressHydrationWarning
+      >
         {children}
         <AnalyticsWrapper />
       </body>

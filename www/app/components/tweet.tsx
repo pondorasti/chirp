@@ -3,7 +3,6 @@ import Image from "next/image"
 import { ITweet } from "../../pages/api/tweet/[id]"
 import { HeartIcon, ImpressionIcon, ReplyIcon, RetweetIcon, TwitterIcon } from "./icons"
 import { TiltWrapper } from "./tilt"
-import { getPlaiceholder } from "plaiceholder"
 
 export const TRANSFORM_ANIMATION =
   "transition-all duration-[600ms] [transition-timing-function:ease] will-change-transform"
@@ -28,8 +27,6 @@ const MediaGroup = async ({ media }: Readonly<MediaGroupProps>) => {
       const height = width / aspectRatio
       const imageUrl = item.preview_image_url ?? item.url
 
-      const { base64 } = await getPlaiceholder(imageUrl, { size: 10 })
-
       return (
         <Image
           priority
@@ -38,7 +35,7 @@ const MediaGroup = async ({ media }: Readonly<MediaGroupProps>) => {
           width={width}
           height={height}
           placeholder="blur"
-          blurDataURL={base64}
+          blurDataURL={item.blurDataURL}
           className={clsx("rounded-xl border border-twitter-gray-border", PARALLAX_STYLE, TRANSFORM_ANIMATION)}
         />
       )
@@ -95,7 +92,6 @@ export const Tweet: React.FC<Readonly<TweetProps>> = ({ tweet }) => {
                   width={48}
                   height={48}
                   className="rounded-full"
-                  priority
                 />
               </a>
             )}

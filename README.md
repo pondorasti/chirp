@@ -31,8 +31,8 @@ lil widget for embe
 - [x] favicon 
 - [x] tweet intents hover animation
 - [x] hero card
+- [x] open graph
 - [ ] grid sizing + mobile
-- [ ] open graph
 
 ## Notes
 

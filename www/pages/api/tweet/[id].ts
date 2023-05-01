@@ -3,6 +3,7 @@ import NextCors from "nextjs-cors"
 import { z } from "zod"
 import imageToBase64 from "image-to-base64"
 import twitter from "../../../lib/twitter"
+import { getPlaiceholder } from "plaiceholder"
 
 const schema = z.object({
   id: z.string().min(1),
@@ -33,6 +34,7 @@ export type ITweet = {
     uri: string
     preview_image_url?: string // Only for `video` type
     url: string
+    blurDataURL: string
   }[]
 }
 
@@ -110,6 +112,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     let uri: string
     let sourceUrl: string
     let previewImageUrl: string | undefined
+    let blurDataURL: string
 
     switch (mediaItem.type) {
       case "photo": {
@@ -119,6 +122,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
         uri = `data:image/${fileExtension};base64,${await imageToBase64(url)}`
         sourceUrl = url
+
+        const { base64 } = await getPlaiceholder(url, { size: 10 })
+        blurDataURL = base64
 
         break
       }
@@ -142,6 +148,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         sourceUrl = variant.url || url
         previewImageUrl = url
 
+        const { base64 } = await getPlaiceholder(previewImageUrl, { size: 10 })
+        blurDataURL = base64
+
         break
       }
       default: {
@@ -158,6 +167,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       uri,
       url: sourceUrl,
       preview_image_url: previewImageUrl,
+      blurDataURL,
     })
   }
 
