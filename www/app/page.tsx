@@ -7,8 +7,7 @@ import { Transition } from "./components/transition"
 import { PARALLAX_STYLE, TRANSFORM_ANIMATION, Tweet } from "./components/tweet"
 import { TWEETS } from "./data"
 
-const SIDE_OVERLAY_STYLE =
-  "pointer-events-none fixed z-10 from-white to-transparent will-change-transform backdrop-blur-[1px]"
+const SIDE_OVERLAY_STYLE = "pointer-events-none fixed z-10 from-white to-transparent backdrop-blur-[1px]"
 
 export const runtime = "experimental-edge"
 
